@@ -1,0 +1,31 @@
+/* ============Cash Received Css */
+.cash-container .heading {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1vw;
+    color: white;
+    font-weight: 400;
+    background: radial-gradient(484px at 49.4% 19%, #021721, #34306f 100.2%);
+  }
+  .cash-container .output-box {
+    width: 100%;
+    background: white;
+    text-align: center;
+    padding: 2vw;
+    font-size: 5vw;
+    font-weight: 700;
+    margin: 40px 0 70px 0;
+  }
+  
+  .cash-container .btn-box {
+    display: flex;
+    justify-content: space-between;
+    margin: 2vw;
+  }
+  .cash-container .btn-box .button-1-front {
+    padding: 20px 80px;
+    color: white;
+    font-size: 40px;
+    font-weight: 500;
+  }
+  

@@ -1,0 +1,181 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 10%;
+  padding-right: 10%;
+  height:70px;
+  /* padding: 5px; */
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  /* top: 0; */
+  width: 100%;
+  z-index: 1000;
+  background: white;
+}
+
+nav .logo img{
+  width: 165px;
+}
+nav ul {
+  display: flex;
+  line-height: 40px;
+}
+
+nav ul li {
+  list-style-type: none;
+
+}
+
+nav ul li a {
+  display: block;
+  margin: 0 2px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+
+}
+
+.nav-icon-span {
+  font-size: 20px;
+}
+
+.nav-items {
+  line-height: 40px;
+}
+
+nav ul .nav-links:after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 0;
+  background: transparent;
+  transition: width 0.7s ease, background-color 0.5s ease;
+}
+
+nav ul .nav-links:hover:after {
+  width: 100%;
+  background: #1976d2;
+}
+
+.nav-icon:not(:last-child) {
+  font-size: 25px;
+}
+
+
+
+.sidebar {
+  width: 250px;
+  background-color: white;
+  padding: 20px 0px 20px 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 70px;
+  bottom: 0;
+  display: none;
+  left: 0;
+  z-index: 2;
+  font-size: 20;
+}
+
+.sidebar-open {
+  display: block;
+  
+}
+
+
+.sidebar h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  overflow-x: hidden;
+  height: 100%;
+  scrollbar-width: thin;
+}
+
+.dropdown {
+  display: block;
+  position: relative;
+  background-color: white;
+ 
+}
+
+.dropbtn {
+  color: black;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width:90%;
+  border-bottom: 1px solid rgb(189, 189, 189);
+}
+
+.dropdown-content {
+  display: none;
+  width: 90%;
+  padding-left: 10px;
+  z-index: 1;
+  overflow-y: auto;
+}
+
+.dropdown-content div {
+  color: black;
+  font-size: 12px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+
+}
+
+
+.dropdown.open .dropdown-content {
+  display: block;
+}
+
+.sub-dropdown-content {
+  width: 100%;
+  padding-left: 10px;
+}
+
+#subdropbtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.sub-dropdown-item {
+  border-bottom: 1px solid rgb(189, 189, 189);
+  margin-bottom: 0px;
+  padding-left: 10px;
+
+}
+
+.sub-dropdown-item div {
+  font-size: 10px;
+}
+
+@media screen and (max-width: 900px) {
+
+
+  .nav ul {
+    display: none;
+  }
+
+  .nav {
+    justify-content: center;
+  }
+}
+
+
+@media (min-width: 900px) and (max-width:1096px) {
+  /* .nav {
+    gap: 10px;
+    justify-content: space-around;
+  } */
+}

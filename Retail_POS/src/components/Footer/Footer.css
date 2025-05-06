@@ -1,0 +1,64 @@
+.footer {
+  background-color: #5e7784;
+  height: 10vh;
+}
+
+.footer .options {
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.footer .options .button-1-front {
+  padding: 5px 10px;
+  font-size: 2vw;
+}
+
+.footer .order-alert {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer .order-alert h1 {
+  font-weight: 600;
+  font-size: 2vw;
+  padding: 1vw;
+  margin-bottom: 3vw;
+}
+
+.footer .order-alert .button-1-front {
+  padding: 12px 70px;
+  font-size: 2vw;
+  font-weight: 600;
+}
+
+
+
+/*Web order css*/
+
+.option {
+  position: relative;
+}
+
+.notification-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+.notification-icon .badge {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 8px;
+  font-size: 1.5w;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

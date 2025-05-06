@@ -1,0 +1,70 @@
+.web-order-history-container {
+    width: 100%;
+  }
+  
+  .web-order-history-container.scrollable {
+    overflow-y: auto;
+  }
+  
+  .web-order-history-container table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: end;
+    position: relative;
+  }
+  
+  .web-order-history-container thead {
+    position: sticky;
+    top: 0;
+    font-size: 1.2vw;
+  }
+  
+  .web-order-history-container .heading {
+    border: 1px solid black;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.685);
+    text-align: center;
+  }
+  
+  .web-order-history-container table td {
+    padding: 5px;
+    border: 1px solid black;
+    font-weight: 600;
+  }
+  
+  .web-order-history-container table td label {
+    font-weight: 600;
+    font-size: 1.2vw;
+  }
+  
+  .web-order-history-container tbody {
+    overflow-y: auto;
+    width: 100%;
+  }
+  
+  .web-order-history-container .heading td {
+    padding: 5px;
+  }
+  
+  .status-label {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: bold;
+  }
+  
+  .status-completed {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .status-pending {
+    background-color: #ffc107;
+    color: black;
+  }
+  
+  .status-cancelled {
+    background-color: #dc3545;
+    color: white;
+  }
+  

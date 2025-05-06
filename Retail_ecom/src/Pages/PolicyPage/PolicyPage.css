@@ -1,0 +1,97 @@
+/* @import url('../../../node_modules/quill/dist/quill.snow.css'); */
+/* Custom base styles for text-related elements that could be overwritten by Tailwind */
+.policy body {
+    font-family: 'Arial', sans-serif; /* Tailwind uses its default font family unless you customize it */
+    font-size: 16px; /* Tailwind's base font size might differ unless customized */
+    line-height: 1.5; /* Tailwind may apply different line-height utilities */
+    color: #333; /* Tailwind's default text color is gray-900 or similar */
+}
+
+.policy h1 {
+    font-size: 2.5rem; /* Tailwind provides text-4xl, text-5xl, etc., for larger font sizes */
+    font-weight: bold; /* Tailwind applies font-bold utility for bold text */
+    line-height: 1.2; /* Tailwind uses leading-tight for smaller line-height */
+    color: #111; /* Tailwind uses text-gray-900 by default */
+}
+
+.policy h2 {
+    font-size: 2rem; /* Tailwind provides text-3xl, text-2xl for similar sizes */
+    font-weight: semi-bold; /* Tailwind uses font-semibold for this effect */
+    line-height: 1.3; /* Tailwind uses leading-snug or leading-tight */
+    color: #222; /* Tailwind’s default color is text-gray-900, this can be customized */
+}
+
+.policy h3 {
+    font-size: 1.75rem; /* Tailwind provides text-2xl for similar sizes */
+    font-weight: semi-bold; /* Tailwind uses font-semibold for a similar effect */
+    line-height: 1.4; /* Tailwind may apply leading-snug or leading-relaxed */
+    color: #333; /* Tailwind uses text-gray-800 or text-gray-900 */
+}
+
+.policy h4 {
+    font-size: 1.5rem; /* Tailwind provides text-xl for similar sizes */
+    font-weight: semi-bold; /* Tailwind uses font-semibold */
+    line-height: 1.5; /* Tailwind uses leading-relaxed for larger line height */
+    color: #444; /* Tailwind typically uses text-gray-700 */
+}
+
+.policy h5 {
+    font-size: 1.25rem; /* Tailwind provides text-lg for similar sizes */
+    font-weight: semi-bold; /* Tailwind uses font-semibold */
+    line-height: 1.5; /* Tailwind applies leading-relaxed for better readability */
+    color: #555; /* Tailwind uses text-gray-600 by default */
+}
+
+.policy h6 {
+    font-size: 1.125rem; /* Tailwind provides text-md or text-base for slightly smaller size */
+    font-weight: normal; /* Tailwind uses font-normal unless specified otherwise */
+    line-height: 1.5; /* Tailwind applies leading-relaxed */
+    color: #666; /* Tailwind uses text-gray-500 or text-gray-600 */
+}
+
+.policy p {
+    font-size: 1rem; /* Tailwind applies text-base for standard text size */
+    line-height: 1.75; /* Tailwind uses leading-relaxed for larger line heights */
+    color: #666; /* Tailwind uses text-gray-600 by default */
+    margin-bottom: 1rem; /* Tailwind would apply mb-4 or similar margin utility */
+}
+
+.policy a {
+    /* color: #007bff; Tailwind provides text-blue-500 by default */
+    text-decoration: none; /* Tailwind uses underline, hover:underline, etc. */
+}
+
+.policy ol {
+    all: unset; /* Resets all properties to their initial values */
+    list-style-type: decimal; /* Default numbering style for ordered lists */
+    list-style-position: inside; /* Default numbering position inside the list item */
+    padding-left: 1.5em; /* Default padding for the list (may vary by browser) */
+    margin: 0; /* Remove any margins applied by other styles */
+}
+.policy ul {
+    all: unset; /* Resets all properties to their initial values */
+    list-style-type: disc; /* Default bullet style for unordered lists */
+    list-style-position: inside; /* Default bullet position inside the list item */
+    padding-left: 1.5em; /* Default padding for the list (may vary by browser) */
+    /* margin: 0; Remove any margins applied by other styles */
+}
+.policy blockquote {
+    font-style: italic; /* Tailwind applies italic class */
+    font-size: 1.25rem; /* Tailwind provides text-lg or text-xl */
+    color: #555; /* Tailwind may apply text-gray-700 */
+    border-left: 4px solid #ccc; /* Tailwind uses border-l-4 and border-gray-300 */
+    padding-left: 1rem; /* Tailwind uses pl-4 for padding */
+}
+
+.policy small {
+    font-size: 0.875rem; /* Tailwind uses text-sm for small text */
+    color: #888; /* Tailwind uses text-gray-500 for lighter text */
+}
+
+.policy strong {
+    font-weight: bold; /* Tailwind applies font-bold */
+}
+
+.policy em {
+    font-style: italic; /* Tailwind applies italic */
+}

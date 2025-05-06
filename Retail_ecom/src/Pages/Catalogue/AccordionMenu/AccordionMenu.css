@@ -1,0 +1,58 @@
+.accordion-menu {
+  font-family: Arial, sans-serif;
+  max-width: 300px;
+}
+
+.accordion-menu h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 15px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+  padding-left: 10px;
+}
+
+.accordion-menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.accordion-menu .menu-item {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  transition: all 0.3s ease;
+  gap: 10px;
+}
+
+.accordion-menu .menu-item.active {
+  border-left-color: #be0500;
+  font-weight: bold;
+  color: #be0500;
+}
+
+.accordion-menu .menu-item:hover {
+  background-color: #f0f0f0;
+}
+
+.accordion-menu .submenu {
+  padding-left: 10px;
+  margin-top: 5px;
+}
+
+.accordion-menu .submenu li {
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.submenu li.active {
+  border-left-color: #be0500;
+  font-weight: bold;
+  color: #be0500ed;
+}
+
+.accordion-menu .submenu li:hover {
+  background-color: #f0f0f0;
+}

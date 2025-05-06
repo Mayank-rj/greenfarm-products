@@ -1,0 +1,53 @@
+/* ------------------View Button CSS ------------------ */
+
+ .view-button h3{
+  text-align: center;
+  /* margin-bottom: 1rem; */
+  padding:5px;
+  color: white;
+  font-size: 2vw;
+  font-weight: 300;
+  background: radial-gradient(484px at 49.4% 19%, #021721, #34306f 100.2%);
+}
+ .view-button table,.view-button th,.view-button td{
+  background: #acb7c1;
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: .2vw 0.8vw;
+  /* margin-bottom: 2vw; */
+  font-size: 1.6vw;
+  font-weight: 600;
+}
+
+ .view-button th {
+  background-color: rgba(0, 0, 0) !important;
+  color: whitesmoke;
+}
+
+ .view-button .view-total{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 1px solid; */
+}
+
+ .view-button .view-total .view-left p{
+  font-size: 1.4vw;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+ .view-button .view-total .view-right p{
+  font-size: 2vw;
+  font-weight: 600;
+}
+
+ .view-button .view-btn{
+  display: flex;
+  justify-content: space-around;
+}
+
+ .view-button .button-1-front{
+  padding: 8px 50px;
+  font-size: 2vw;
+}

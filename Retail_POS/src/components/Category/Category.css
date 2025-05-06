@@ -1,0 +1,69 @@
+.category-container {
+  background-color: #5e7784;
+  padding: 20px 0;
+  position: relative;
+}
+
+.category-container .input-field {
+  height: 20%;
+}
+
+/*-----------Temporary code--------------*/
+
+.category-container .input-field div {
+  background-color: black;
+  color: yellow;
+  font-size: 4vw;
+  margin: 0 5%;
+  width: 90%;
+  padding: 10px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  border: 1px solid whitesmoke;
+}
+
+.category-container div:focus {
+  outline: none;
+}
+
+/*-----------Temporary code--------------*/
+
+.category-container .cat-btn {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 70%;
+}
+
+.category-container .cat-btn button {
+  flex: 0 0 45%;
+  margin: 8px 5px;
+}
+
+.category-container .categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  margin: 10px 0;
+  overflow-y: auto;
+  height: 35vh;
+}
+
+.pay-btn {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.pay-btn button {
+  width: 80%;
+  display: block;
+  margin: 10px auto;
+}
+
+.pay-btn .button-1-front {
+  font-size: 2vw;
+  font-weight: 600;
+  color: white;
+  background-color: hsl(120, 100%, 25%);
+}

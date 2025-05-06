@@ -1,0 +1,172 @@
+.pay-container .title-box {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: white;
+    background: radial-gradient(
+      484px at 49.4% 19%,
+      rgb(23, 156, 214) 0%,
+      rgb(52, 48, 111) 100.2%
+    );
+  }
+  
+  .pay-container .pay-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .pay-container .total-amt {
+    width: 100%;
+    padding-bottom: 10px;
+    color: black;
+    background: white;
+    text-align: center;
+    font-weight: 600;
+  }
+  
+  .pay-container .total-amt p {
+    font-weight: 600;
+    font-size: 1.7vw;
+  }
+  
+  .pay-container .total-text {
+    font-size: 6vw !important;
+    font-weight: 900;
+    /* line-height: 120px; */
+  }
+  
+  .pay-container .total-amt .discount-apply {
+    font-size: 1.2vw !important;
+    text-align: end;
+    padding-right: 10px;
+  }
+  
+  .pay-container .discount-btn-box {
+    display: grid;
+    grid: 1fr 1fr/ 1fr;
+    align-items: center;
+    gap: 2vw;
+    flex-direction: column;
+  }
+  
+  .pay-container .discount-btn-box .button-1-front {
+    padding: 10px 37px;
+    font-weight: 600;
+    font-size: 2vw;
+  }
+  
+  .pay-container .pay-footer-btn input {
+    width: 100%;
+    background: white;
+    /* margin: 1rem 0; */
+    padding: 0.666rem;
+    text-align: center;
+    font-size: 3vw;
+    font-weight: 500;
+    border: 1px solid whitesmoke;
+    background-color: #f5eeaf;
+  }
+  
+  .pay-container .pay-footer-btn input::placeholder {
+    font-size: 1.8vw;
+    transform: translateY(-30%);
+  }
+  
+  .pay-container .box-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    margin-top: 10px;
+  }
+  
+  .pay-container .box-container .btn-box {
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    /* gap: 5px; */
+    /* flex-direction: column; */
+    width: 25%;
+    /* justify-content: center; */
+  }
+  
+  .pay-container .box-container .btn-box button {
+    flex: 0 0 45%;
+    font-size: 2.5rem;
+    /* width: 10%; */
+    /* height: 20%; */
+    color: white;
+    font-weight: 600;
+    /* padding: 4px 6px; */
+    line-height:1 ;
+    background: #1410ed;
+    box-shadow: inset 0 1px 0 #10aeed;
+    border: 1px solid whitesmoke;
+    border-radius: 4px;
+    text-shadow: 0 -1px 0 #10aeed;
+    background: linear-gradient(to bottom, #2fabd1 0%, #215599 100%);
+    transition: all 0.2s;
+    /* margin: 5px; */
+  }
+  
+  .pay-container .box-container .btn-box button:active {
+    box-shadow: none !important;
+    color: white !important;
+    background: linear-gradient(to top, #2fabd1 0%, #215599 100%);
+  }
+  
+  .pay-container .box-container .btn-box .btn-exact {
+    /* background: #e93f07; */
+    background: linear-gradient(to bottom, #20758f 0%, #194074 100%);
+    /* box-shadow: 0px 5px 10px rgb(231, 201, 180) inset; */
+    box-shadow: inset 0 1px 0 #0c7eac;
+    
+    font-size: 2vw;
+  }
+  
+  .pay-container .pay-input-btn {
+    /* width: 40%; */
+  }
+  
+  .pay-container .pay-footer-btn {
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* display: grid;
+    grid-template-columns: auto auto; */
+  
+    width: 30%;
+    /* gap: 5px; */
+  }
+  
+  .pay-container .pay-footer-btn button {
+    font-size: 1.5vw;
+    font-weight: 600;
+    width: 100%;
+    margin: 5px 0;
+    border-radius: 0;
+    box-shadow: 0 -5px 15px #888 inset;
+    /* padding: 5px !important; */
+  }
+  
+  /*---------------------------PAY ERROR ------------------------ */
+  
+  .pay-container .pay-error,
+  .split-payment-alert {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .pay-container .pay-error h1,
+  .split-payment-alert h1 {
+    font-weight: 600;
+    font-size: 2vw;
+    padding: 1vw;
+    margin-bottom: 3vw;
+  }
+  
+  .pay-container .pay-error .button-1-front,
+  .split-payment-alert .button-1-front {
+    padding: 12px 70px;
+    font-size: 2vw;
+    font-weight: 600;
+  }
+  

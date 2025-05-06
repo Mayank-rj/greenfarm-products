@@ -1,0 +1,29 @@
+.barcode-products-table {
+  width: 100%; 
+  background: #efeff1;
+  border: 1px solid white;
+  border-collapse: collapse;
+  table-layout: fixed;
+  overflow-y: auto;
+}
+
+.barcode-products-table, th, td {
+  padding: 10px;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+.barcode-products-table th {
+  background: #163350;
+  border:none;
+  color: white;
+  font-weight: 700;
+  z-index: 1;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+}
+.barcode-products-table td {
+  font-weight: 600;
+  border: 1px solid black;
+}

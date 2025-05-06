@@ -1,0 +1,50 @@
+/* ======= Pay Split Css ======= */
+.split-container .heading {
+    text-align: center;
+    color: white;
+    font-size: 2vw;
+    font-weight: 400;
+    background: radial-gradient(484px at 49.4% 19%, #021721, #34306f 100.2%);
+  }
+  
+  .split-container .amt-box h5 {
+    font-size: 3.333vw;
+    font-weight: 700;
+    background: #d6e9f1;
+  }
+  
+  .split-container .flex-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .split-container .amt-box {
+    text-align: center;
+  }
+  
+  .split-container .flex-box p {
+    font-size: 1.6vw;
+    font-weight: 500;
+    margin-top: 1rem;
+  }
+  
+  .split-container .flex-box input {
+    font-size: 2vw;
+    font-weight: 500;
+    background: #f5eeaf;
+    width: 96%;
+    padding: 0.3vw;
+    border: 1px solid whitesmoke;
+  }
+  
+  .split-container .flex-box button {
+    font-size: 3vw;
+    font-weight: 500;
+    width: 100%;
+  }
+  
+  .split-container .keyboard {
+    margin: 10px 0;
+  }
+  

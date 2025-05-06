@@ -1,0 +1,9 @@
+.clear-order h1 {
+    font-weight: 600;
+    font-size: 2vw;
+  }
+  
+ .clear-order button {
+    width: 45%;
+    margin: 5vw 2.5% 0;
+  }

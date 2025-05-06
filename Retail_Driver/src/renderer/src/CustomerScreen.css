@@ -1,0 +1,114 @@
+.main {
+  position: relative;
+  margin: 0 10%;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  height: 15vh;
+}
+
+.navbar h1 {
+  font-weight: 800;
+  align-self: center;
+  margin-right: 20px;
+  font-size: 2rem;
+  color: rgb(44, 44, 94);
+}
+
+.navbar img {
+  margin-left: 20px;
+}
+
+.customer-facing-table{
+  height: 60vh;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.customer-facing-table table {
+  width: 100%;
+  border-radius: 8px;
+  overflow-y: auto;;
+}
+
+.main::before {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: blur(30px);
+  width: 100%;
+  height: 100%;
+}
+
+.customer-facing-table table td {
+  padding: 0 15px;
+  font-size: 5vh !important;
+  font-weight: 700;
+}
+
+
+
+
+.customer-facing-table table tbody tr {
+  display: none; 
+}
+
+.customer-facing-table table tbody tr:nth-last-child(-n+15) {
+  display: table-row;
+}
+
+.first-column {
+  width: 70%;
+  font-size: 2vw;
+  text-align: start;
+}
+.second-column {
+  width: 30%;
+  text-align: right;
+}
+
+.main_headings {
+  display: flex;
+  height: 22vh;
+}
+
+.Sub_headings1 p {
+    width: 20vw;
+  margin-top: 5px;
+  margin-left: 2%;
+  font-size: 2vw;
+  font-weight: 700 !important;
+}
+
+.Sub_headings2 {
+    text-align: end;
+    margin-top: 15px;
+    margin-left: 53%;
+    font-size: 2vw;
+}
+
+.Sub_headings2 p {
+  font-size: 3vw;
+  font-weight: 700 !important;
+}
+
+.Sub_headings2 p span{
+  font-size: 5vw;
+  font-weight: 700 !important;
+}
+
+
+.Sub_headings2 .price {
+  font-weight: 800;
+  margin-right: 20%;
+  color: rgb(44, 44, 94);
+}

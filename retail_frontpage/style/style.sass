@@ -1,0 +1,34 @@
+@import "mixin"
+
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+
+html
+    font-size: 70%
+
+.container
+    @include flex(column, center, center)
+    gap: 50px
+    padding: 50px 0
+    height: 100vh
+    @include bg-color(#0f172a)
+    color: white
+    h1
+        font-size: 3.2rem
+        text-transform: uppercase
+    a
+        margin: 20px 10px
+        padding: 10px 20px
+        @include bg-color(#4caf50)
+        border-radius: 5px
+        color: white
+        border: none
+        cursor: pointer
+        font-weight: 700
+        font-size: 1.5rem
+        text-decoration: none
+        &:hover
+            @include bg-color(#45a049)

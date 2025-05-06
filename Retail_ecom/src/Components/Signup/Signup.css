@@ -1,0 +1,3 @@
+.placeholder-bold::placeholder {
+  font-weight: bold;
+}

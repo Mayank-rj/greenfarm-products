@@ -1,0 +1,56 @@
+.efp-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .efp-container h1 {
+    text-align: center;
+    background: radial-gradient(484px at 49.4% 19%, #021721, #34306f 100.2%);
+    color: white;
+    width: 100%;
+    font-size: 2.5vw;
+  }
+  
+  .efp-container h5 {
+    font-size: 1.55vw;
+    font-weight: 500;
+    margin-top: 50px;
+  }
+  
+  .efp-container .card-amount {
+    padding: 5px;
+    text-align: center;
+    border: 1px solid black;
+    font-size: 7vw;
+    font-weight: 600;
+    width: 100%;
+    background-color: whitesmoke;
+    margin-bottom: 50px;
+  }
+  
+  .efp-container .para {
+    width: 100%;
+    text-align: start;
+    font-size: 0.9vw;
+    font-weight: 500;
+  }
+  
+  .efp-container .btn-container {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+  }
+  
+  .efp-container .btn-container button {
+    width: 100%;
+    margin: 0;
+  }
+  
+  .efp-container .btn-container .button-1-front {
+    color: white;
+    font-weight: 600;
+    font-size: 2vw;
+  }
+  

@@ -1,0 +1,29 @@
+.keypad-container{
+    background-color: #f0f0f0;
+    padding: 5px;
+    border-radius: 5px;
+    /* width: 100%; */
+}
+
+.keypad-container .row{
+    display: flex;
+    gap: 5px;
+    margin: 5px 0;
+}
+
+.keypad-container button {
+    padding: 13px 20px;
+    margin: 0;
+    font-size: 1.3vw;
+    font-weight: 500;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    flex-grow: 2;
+  }
+  
+ .keypad-container button:hover {
+    background-color: #e0e0e0;
+  }

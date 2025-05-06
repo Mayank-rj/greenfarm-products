@@ -1,0 +1,32 @@
+.barcode-container {
+  background: #2A6198;
+  padding: 0 5%;
+}
+
+.barcode-container .heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 10vh;
+  color: white;
+}
+.barcode-container .heading h1{
+  padding: 20px;
+}
+.barcode-heading-logo{
+  width: 15%;
+}
+
+/* /-----------------Main Field Start----------------/ */
+
+.barcode-container .main-field {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+}
+
+.barcode-container .table-field {
+  width: 100%;
+  height: 85%;
+  overflow-y: auto;
+}

@@ -1,0 +1,16 @@
+.headline{
+    display: flex;
+    justify-content: space-between;
+    padding: 3px;
+    font-size: 2vw;
+    font-weight: 500;
+    color: white;
+  }
+
+  .close{
+    width: 35px;
+    height: 35px;
+    background: red;
+    border-radius: 50%;
+    text-align: center;
+  }

@@ -1,0 +1,27 @@
+.cardpay-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .cardpay-container h2 {
+    text-align: center;
+    width: 100%;
+    font-size: 2.5vw;
+  }
+  
+  .cardpay-container .btn-container {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+  }
+  
+  .cardpay-container .btn-container button {
+    width: 100%;
+  }
+  
+  .merchant-slip{
+    height: 100%;
+  }

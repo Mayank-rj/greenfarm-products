@@ -1,0 +1,14 @@
+/* first Box of date time and some inputs */
+.display-current-container {
+    display: flex;
+    padding: 5px;
+    justify-content: space-between;
+  }
+  
+  
+  .display-current-container .current-date {
+    width: 25%;
+  }
+  
+  
+  

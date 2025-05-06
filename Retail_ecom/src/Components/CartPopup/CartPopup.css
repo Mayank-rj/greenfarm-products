@@ -1,0 +1,21 @@
+@media (max-width: 640px) {
+  .gapping {
+    padding: 16px;
+  }
+  .addgap {
+    margin: 2px;
+  }
+}
+
+#popup-modal {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#popup-modal {
+  transition: opacity 0.3s ease;
+}
+
+#popup-modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}

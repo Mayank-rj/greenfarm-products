@@ -1,0 +1,76 @@
+.controlButton {
+  background-color: #be0500;
+  color: white;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.controlCount {
+  margin: 2px;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.justify-start-important {
+  justify-content: flex-start !important;
+}
+
+.slider-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 5px;
+}
+
+.slider-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  background-color: rgb(13, 185, 240);
+  cursor: pointer;
+  border: 0.5px px solid black;
+  border-radius: 50%;
+}
+
+.slider-range::-webkit-slider-thumb:hover {
+  border: 1px solid black;
+}
+
+.slider-range::-moz-range-thumb {
+  width: 32px;
+  height: 32px;
+  background-color: rgb(13, 185, 240);
+  cursor: pointer;
+  border: 0.5px solid black;
+  border-radius: 50%;
+}
+
+.slider-range::-moz-range-thumb:hover {
+  border: 1px solid black;
+}
+
+.slider-range::-ms-thumb {
+  width: 32px;
+  height: 32px;
+  background-color: rgb(13, 185, 240);
+  cursor: pointer;
+  border: 0px solid black;
+  border-radius: 50%;
+}
+
+.slider-range::-ms-thumb:hover {
+  border: 1px solid black;
+}

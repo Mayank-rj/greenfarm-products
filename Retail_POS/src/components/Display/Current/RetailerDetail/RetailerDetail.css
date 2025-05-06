@@ -1,0 +1,36 @@
+ .retailer-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-direction: column;
+    flex: 1;
+    padding-right: 80px;
+    font-size: 0.9vw;
+    width: 75%;
+  }
+
+.retailer-detail input {
+    font-size: 0.9vw;
+    padding: 5px;
+    flex: 1;
+  }
+  
+ .retailer-detail button {
+    background-color: #057298;
+    color: white;
+    box-shadow: none;
+    padding: 5px 10px;
+    font-size: 0.9vw;
+    border-radius: 2px;
+    border: none;
+    margin: 4px;
+  }
+  .retailer-detail .name,
+.scan {
+  width: 100%;
+  display: flex;
+  gap: 2px;
+}
+.retailer-detail .phone input {
+  width: 50%;
+}

@@ -1,0 +1,28 @@
+.display-quantity-container  {
+    display: flex;
+  }
+  
+  .display-quantity-container  h1 {
+    margin-left: auto;
+    font-weight: 700;
+    font-size: 2.6vw;
+  }
+  
+  .display-quantity-container  .btn {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-top: 3px;
+    gap: 3px;
+  }
+  
+  .display-quantity-container  button {
+    padding: 3px 11px;
+    /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); */
+    border-radius: 5px;
+    border: 1px solid;
+    /* cursor: pointer; */
+    font-size: 1.8vw;
+    font-weight: 600;
+  }
+  

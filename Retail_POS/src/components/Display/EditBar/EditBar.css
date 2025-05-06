@@ -1,0 +1,17 @@
+/* delete edit view hold button row */
+.display-editing-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-top: 5px;
+    background-color: rgba(0, 0, 0, 0.685);
+    /* margin: 5px 0; */
+  }
+  
+  .display-editing-container .button-1-front {
+    padding: 8px 20px;
+    margin: 0;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: 700;
+  }

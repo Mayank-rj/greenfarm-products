@@ -1,0 +1,31 @@
+.display-container {
+  background-color: #acb7c1;
+  display: grid;
+  grid-template-rows: auto auto 1fr ;
+}
+
+
+
+.display-container .delete-confirm h1 {
+  font-weight: 600;
+  font-size: 2vw;
+}
+
+.display-container .delete-confirm button {
+  width: 45%;
+  margin: 5vw 2.5% 0;
+}
+/* End of delete edit view hold button row */
+
+
+
+/* Row of total item and total amount of products */
+
+.display-container .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+

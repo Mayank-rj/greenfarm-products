@@ -1,0 +1,168 @@
+.openkg-container {
+    text-align: center;
+  }
+  
+  .openkg-container .header {
+    background: radial-gradient(484px at 49.4% 19%, #021721, #34306f 100.2%);
+    color: white;
+  }
+  
+  .openkg-container .header h1 {
+    font-size: 2.5vw;
+  }
+  
+  .openkg-container label {
+    font-size: 2.2vw;
+    font-weight: 900;
+    /* padding-top: 10px; */
+  }
+  
+  .openkg-container .inputs .price,
+  .kilogram {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .openkg-container input {
+    background-color: #f5eeaf !important;
+    border: 1px solid whitesmoke;
+    width: 200px;
+    color: black !important;
+    margin-top: 10px;
+    font-size: 2vw;
+    padding: 0 10px;
+  }
+  
+  /*Hide arrows in input type number*/
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /*Hide arrows in input type number*/
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  
+  /* .openkg-container .inputs {
+    padding-top: 20px;
+  } */
+  
+  .openkg-container .userInput {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 0 20px; */
+  }
+  .openkg-container .userInput .inputs {
+    width: 40%;
+  }
+  
+  .openkg-container .ttl {
+    width: 30%;
+  }
+  
+  .openkg-container .ttl span {
+    font-size: 2.2vw;
+    font-weight: 900;
+    /* padding-top: 10px; */
+  }
+  
+  .openkg-container .total {
+    width: 100%;
+    font-size: 4.2vw;
+    font-weight: 700;
+    border: 1px solid #ccc;
+    overflow-x: auto;
+    height: fit-content;
+    /* padding: 10px; */
+    background-color: #f5eeaf;
+    border: 1px solid whitesmoke;
+  }
+  
+  .openkg-container .notes {
+    display: flex;
+    /* margin: 10px 0; */
+    font-size: 1.2vw;
+    align-items: center;
+    /* padding-left: 20px; */
+    justify-content: space-between;
+  }
+  
+  .openkg-container .notes input {
+    width: 60%;
+    font-size: 1.5vw;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .openkg-container .footer-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 0 20px; */
+  }
+  
+  .openkg-container .buttons {
+    width: 30%;
+    /* padding-right: 30px; */
+    align-self: flex-end;
+    font-weight: 600 !important;
+    /* border: 1px solid; */
+  }
+  
+  .openkg-container .buttons button {
+    margin: 5px 0;
+    font-weight: 600;
+    font-size: 2vw;
+    color: white;
+  }
+  
+  .openkg-container .buttons .submit-btn {
+    width: 100%;
+    margin: 5px 0;
+  }
+  
+  .openkg-container .buttons .submit-btn button {
+    width: 100%;
+  }
+  
+  .openkg-container .buttons .reset-cancel-btn {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .openkg-container .buttons .reset-cancel-btn button {
+    width: 50%;
+  }
+  
+  .openkg-container .error {
+    border: 2px solid red !important;
+  }
+  
+  .openkg-container .shake {
+    animation: shake 0.2s ease-in-out 0s 2;
+  }
+  
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(5px);
+    }
+    50% {
+      transform: translateX(-5px);
+    }
+    75% {
+      transform: translateX(5px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  

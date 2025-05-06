@@ -1,0 +1,55 @@
+.fixed {
+  position: fixed;
+}
+
+.bg-gray-800 {
+  background-color: #333;
+}
+
+.z-50 {
+  z-index: 50;
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.max-w-md {
+  max-width: 28rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+.text-gray-600 {
+  color: #4b5563;
+}
+
+.text-red-500 {
+  color: #ef4444;
+}
+
+.hover\:cursor-pointer {
+  cursor: pointer;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+.custom-toast {
+  background-color: #b91c1c !important;
+  color: #fff !important;
+}

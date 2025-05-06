@@ -1,0 +1,13 @@
+.clock-container {
+    font-size: 0.9vw;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .clock-container p {
+    border: 1px solid;
+    padding: 3px;
+    background-color: rgb(255, 239, 237);
+    width: 100%;
+    text-align: center;
+  }

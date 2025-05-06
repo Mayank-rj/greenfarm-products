@@ -1,0 +1,83 @@
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, and Opera */
+  }
+  
+  .flex-nowrap {
+    flex-wrap: nowrap;
+  }
+  
+  .overflow-x-auto {
+    overflow-x: auto;
+  }
+  
+  .mySwiperCat {
+    width: 100% ;
+    height: 100% ;
+}
+
+ #categoryImage {
+    display: block !important;
+    width: 200px !important;
+    height: 200px !important;
+    object-fit: cover !important;
+} 
+.mySwiperProduct {
+  width: 100% ;
+  height: 280px ;
+}
+
+.custom-height {
+  height: 100px;
+}
+
+@media (min-width: 640px) {
+  .custom-height {
+    height: 100px;
+  }
+}
+
+@media (min-width: 768px) {
+  .custom-height {
+    height: 50vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  .custom-height {
+    height: 450px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .custom-height {
+    height: 450px;
+  }
+}
+
+.custom-font-size {
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .custom-font-size {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .custom-font-size {
+    font-size: 2rem;
+    margin-top: 30px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .custom-font-size {
+    font-size: 1.875rem;
+  }
+}
