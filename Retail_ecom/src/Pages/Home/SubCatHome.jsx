@@ -13,8 +13,11 @@ export const SubCatHome = ({ heading, subCategories }) => {
         category: subCategory.category,
       })
     );
+    // navigate(
+    //   `${SITE_CONFIG.linkPath}/catalogue?cid=${subCategory.category}&subcid=${subCategory._id}`
+    // );
     navigate(
-      `${SITE_CONFIG.linkPath}/catalogue?cid=${subCategory.category}&subcid=${subCategory._id}`
+      `${SITE_CONFIG.linkPath}/product/${subCategory._id}`
     );
   };
   return (

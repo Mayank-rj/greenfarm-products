@@ -272,7 +272,7 @@ console.log(cartItems);
 
 const makepayment = async () => {
   try {
-    const stripe = await loadStripe("pk_test_51BTUDGJAJfZb9HEBwDg86TN1KNprHjkfipXmEDMb0gSCassK5T3ZfxsAbcgKVmAIXF7oZ6ItlZZbXO6idTHE67IM007EwQ4uN3");
+    const stripe = await loadStripe("pk_test_51RMJDhGaEKZL1IJGkOs9FWwZ3N9O5X9H6NbysrNuqeqXYKGkC5FB28MnK2GJfgG12PvLeEevS3bv2j7qVdPKv8Cw00vNBeALi3");
 
     // if (!stripe) {
     //   console.error("Stripe failed to load.");

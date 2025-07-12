@@ -50,7 +50,11 @@ export const HourlyReport = () => {
   // Filter only "PAID" orders
   // const paidOrders = orderHistory.filter((order) => order.status === "PAID");
   useEffect(() => {
-    setPaidOrders(orderHistory.filter((order) => order.status === "paid"));
+    setPaidOrders(
+      orderHistory.filter(
+        (order) => order.status === "paid" && order.payment_mode !== "STRIPE"
+      )
+    );
   }, [orderHistory]);
   return (
     <div>

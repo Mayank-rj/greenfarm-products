@@ -9,13 +9,13 @@ router.post("/",async(req,res)=>{
     
     
     const newOrder = await order.create(orderDetail);
-    console.log("stripe data" ,newOrder._id);
+    console.log("stripe data" ,process.env.STRIPE_SECRET);
     const lineitems = product.product_details.map((item) => ({
         price_data: {
           currency: "aud",
           product_data: {
             name: item.product.name,
-            images: [`http://43.204.248.180/images/${item.product.cover}`] 
+            images: [`http://13.203.57.229/images/${item.product.cover}`] 
  
           },
           unit_amount: Math.round(item.price * 100), 
@@ -27,8 +27,8 @@ router.post("/",async(req,res)=>{
         payment_method_types:["card"],
         line_items:lineitems,
         mode:"payment",
-        success_url:"http://43.204.248.180/success?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url:"http://43.204.248.180/failed?session_id={CHECKOUT_SESSION_ID}",
+        success_url:"http://www.greenfarmproducts.com.au/success?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url:"http://www.greenfarmproducts.com.au/failed?session_id={CHECKOUT_SESSION_ID}",
         metadata: {
             orderDetail:JSON.stringify(newOrder._id), 
           },

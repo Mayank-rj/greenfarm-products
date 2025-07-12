@@ -4,14 +4,24 @@ import { useDispatch } from "react-redux";
 import { addzprintData } from "../../../feature/zprintDataSlice";
 import { useOutletContext } from "react-router";
 
-const ReportsTable = ({ groupedData,type }) => {
+const ReportsTable = ({ groupedData, type }) => {
   console.log(groupedData);
-  const dispatch=useDispatch()
-  const { startDate, endDate,startHourlyTime,endHourlyTime } = useOutletContext();
+  const dispatch = useDispatch();
+  const { startDate, endDate, startHourlyTime, endHourlyTime } =
+    useOutletContext();
   const calculateData = (mode) => {
-    const filteredData = groupedData.filter((data) => data.payment_mode === mode);
-    const totalAmount = filteredData.reduce((acc, curr) => acc + curr.grand_total, 0);
-    const totalDiscount = filteredData.reduce((acc, curr) => acc + curr.discount, 0);
+    const filteredData = groupedData.filter(
+      (data) => data.payment_mode === mode
+    );
+    console.log("filteredData", filteredData);
+    const totalAmount = filteredData.reduce(
+      (acc, curr) => acc + curr.sub_total,
+      0
+    );
+    const totalDiscount = filteredData.reduce(
+      (acc, curr) => acc + curr.discount,
+      0
+    );
     const netAmount = totalAmount - totalDiscount;
     return {
       count: filteredData.length,
@@ -21,12 +31,17 @@ const ReportsTable = ({ groupedData,type }) => {
     };
   };
 
-
   // console.log(showExcelDetail);
-  
+
   const calculateTotal = () => {
-    const totalAmount = groupedData.reduce((acc, curr) => acc + curr.grand_total, 0);
-    const totalDiscount = groupedData.reduce((acc, curr) => acc + curr.discount, 0);
+    const totalAmount = groupedData.reduce(
+      (acc, curr) => acc + curr.sub_total,
+      0
+    );
+    const totalDiscount = groupedData.reduce(
+      (acc, curr) => acc + curr.discount,
+      0
+    );
     const netAmount = totalAmount - totalDiscount;
     return {
       count: groupedData.length,
@@ -39,55 +54,64 @@ const ReportsTable = ({ groupedData,type }) => {
   const eftposData = calculateData("eftpos");
   const cashData = calculateData("cash");
   const splitPaymentData = calculateData("split payment");
-  const weborderdata =calculateData("STRIPE")
+  // const weborderdata =calculateData("STRIPE")
   const allData = calculateTotal();
 
   const excelInfo = [
     {
-      INSTORE: 'EFTPOS',
-      'SALES COUNT': eftposData.count,
-      'TOTAL AMOUNT': eftposData.totalAmount,
+      INSTORE: "EFTPOS",
+      "SALES COUNT": eftposData.count,
+      "TOTAL AMOUNT": eftposData.totalAmount,
       DISCOUNT: eftposData.totalDiscount,
       SURCHARGE: 0,
-      PAID: (eftposData.totalAmount - parseFloat(eftposData.totalDiscount)).toFixed(2)
+      PAID: (
+        eftposData.totalAmount - parseFloat(eftposData.totalDiscount)
+      ).toFixed(2),
     },
     {
-      INSTORE: 'CASH',
-      'SALES COUNT': cashData.count,
-      'TOTAL AMOUNT': cashData.totalAmount,
+      INSTORE: "CASH",
+      "SALES COUNT": cashData.count,
+      "TOTAL AMOUNT": cashData.totalAmount,
       DISCOUNT: cashData.totalDiscount,
       SURCHARGE: 0,
-      PAID: (cashData.totalAmount - parseFloat(cashData.totalDiscount)).toFixed(2)
+      PAID: (cashData.totalAmount - parseFloat(cashData.totalDiscount)).toFixed(
+        2
+      ),
     },
     {
-      INSTORE: 'SPLIT PAYMENT',
-      'SALES COUNT': splitPaymentData.count,
-      'TOTAL AMOUNT': splitPaymentData.totalAmount,
+      INSTORE: "SPLIT PAYMENT",
+      "SALES COUNT": splitPaymentData.count,
+      "TOTAL AMOUNT": splitPaymentData.totalAmount,
       DISCOUNT: splitPaymentData.totalDiscount,
       SURCHARGE: 0,
-      PAID: (splitPaymentData.totalAmount - parseFloat(splitPaymentData.totalDiscount)).toFixed(2)
+      PAID: (
+        splitPaymentData.totalAmount -
+        parseFloat(splitPaymentData.totalDiscount)
+      ).toFixed(2),
     },
+    // {
+    //   INSTORE: 'WEB ORDER',
+    //   'SALES COUNT': weborderdata.count,
+    //   'TOTAL AMOUNT': weborderdata.totalAmount,
+    //   DISCOUNT: weborderdata.totalDiscount,
+    //   SURCHARGE: 0,
+    //   PAID: (weborderdata.totalAmount - parseFloat(weborderdata.totalDiscount)).toFixed(2)
+    // },
     {
-      INSTORE: 'WEB ORDER',
-      'SALES COUNT': weborderdata.count,
-      'TOTAL AMOUNT': weborderdata.totalAmount,
-      DISCOUNT: weborderdata.totalDiscount,
-      SURCHARGE: 0,
-      PAID: (weborderdata.totalAmount - parseFloat(weborderdata.totalDiscount)).toFixed(2)
-    },
-    {
-      INSTORE: 'TOTAL AMOUNT',
-      'SALES COUNT': groupedData.length,
-      'TOTAL AMOUNT': (0 + allData.totalAmount),
+      INSTORE: "TOTAL AMOUNT",
+      "SALES COUNT": groupedData.length,
+      "TOTAL AMOUNT": 0 + allData.totalAmount,
       DISCOUNT: (0 + parseFloat(allData.totalDiscount)).toFixed(2),
       SURCHARGE: 0,
-      PAID: (0 + (parseFloat(allData.totalAmount) - parseFloat(allData.totalDiscount))).toFixed(2)
-    }
+      PAID: (
+        0 +
+        (parseFloat(allData.totalAmount) - parseFloat(allData.totalDiscount))
+      ).toFixed(2),
+    },
   ];
 
-  const name=localStorage.getItem("activeButton")
+  const name = localStorage.getItem("activeButton");
   // console.log(excelInfo);
-  
 
   useEffect(() => {
     if (groupedData.length) {
@@ -99,17 +123,23 @@ const ReportsTable = ({ groupedData,type }) => {
   }, [groupedData]);
   useEffect(() => {
     // console.log("hello");
-    console.log(startHourlyTime,endHourlyTime);
+    console.log(startHourlyTime, endHourlyTime);
 
-    
-    dispatch(addzprintData({
-      type:type,
-      from: new Date(name === "HOURLY" ? startHourlyTime : startDate).toLocaleString(),
-      to: new Date(name === "HOURLY" ? endHourlyTime : endDate).toLocaleString(),
-      eftposData,
-      cashData,
-      splitPaymentData,
-      allData}))
+    dispatch(
+      addzprintData({
+        type: type,
+        from: new Date(
+          name === "HOURLY" ? startHourlyTime : startDate
+        ).toLocaleString(),
+        to: new Date(
+          name === "HOURLY" ? endHourlyTime : endDate
+        ).toLocaleString(),
+        eftposData,
+        cashData,
+        splitPaymentData,
+        allData,
+      })
+    );
     // dispatch(
     //   addzprintData({
     //     type: 'dailySummary',
@@ -140,9 +170,9 @@ const ReportsTable = ({ groupedData,type }) => {
     //     // totalDiscount: data.length > 0 ? parseFloat(discount).toFixed(2) : 0,
     //     // totalSurcharge: 0,
     //     // totalTotal: data.length > 0 ? (totalAmount - parseFloat(discount)).toFixed(2) : 0
-      // })
+    // })
     // )
-  }, [groupedData,dispatch])
+  }, [groupedData, dispatch]);
 
   return (
     <div className="table">
@@ -158,7 +188,14 @@ const ReportsTable = ({ groupedData,type }) => {
         </thead>
         <tbody>
           <tr>
-            <td style={{ background: 'rgba(153, 139, 139, 0.5)', fontSize: '2vw' }}>EFTPOS</td>
+            <td
+              style={{
+                background: "rgba(153, 139, 139, 0.5)",
+                fontSize: "2vw",
+              }}
+            >
+              EFTPOS
+            </td>
           </tr>
           <tr>
             <td>{"INSTORE"}</td>
@@ -168,7 +205,14 @@ const ReportsTable = ({ groupedData,type }) => {
             <td>{eftposData.netAmount}</td>
           </tr>
           <tr>
-            <td style={{ background: 'rgba(153, 139, 139, 0.5)', fontSize: '2vw' }}>{"CASH"}</td>
+            <td
+              style={{
+                background: "rgba(153, 139, 139, 0.5)",
+                fontSize: "2vw",
+              }}
+            >
+              {"CASH"}
+            </td>
           </tr>
           <tr>
             <td>{"INSTORE"}</td>
@@ -178,7 +222,14 @@ const ReportsTable = ({ groupedData,type }) => {
             <td>{cashData.netAmount}</td>
           </tr>
           <tr>
-            <td style={{ background: 'rgba(153, 139, 139, 0.5)', fontSize: '2vw' }}>SPLIT</td>
+            <td
+              style={{
+                background: "rgba(153, 139, 139, 0.5)",
+                fontSize: "2vw",
+              }}
+            >
+              SPLIT
+            </td>
           </tr>
           <tr>
             <td>{"INSTORE"}</td>
@@ -187,7 +238,7 @@ const ReportsTable = ({ groupedData,type }) => {
             <td>{splitPaymentData.totalDiscount}</td>
             <td>{splitPaymentData.netAmount}</td>
           </tr>
-          <tr>
+          {/* <tr>
             <td style={{ background: 'rgba(153, 139, 139, 0.5)', fontSize: '2vw' }}>WEB</td>
           </tr>
           <tr>
@@ -196,9 +247,16 @@ const ReportsTable = ({ groupedData,type }) => {
             <td>{weborderdata.totalAmount}</td>
             <td>{weborderdata.totalDiscount}</td>
             <td>{weborderdata.netAmount}</td>
-          </tr>
+          </tr> */}
           <tr>
-            <td style={{ background: 'rgba(153, 139, 139, 0.5)', fontSize: '2vw' }}>ALL</td>
+            <td
+              style={{
+                background: "rgba(153, 139, 139, 0.5)",
+                fontSize: "2vw",
+              }}
+            >
+              ALL
+            </td>
           </tr>
           <tr>
             <td>{"INSTORE"}</td>

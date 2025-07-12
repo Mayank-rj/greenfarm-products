@@ -50,7 +50,11 @@ export const HoldReport = () => {
   // Filter only "PAID" orders
   // const paidOrders = orderHistory.filter((order) => order.status === "HOLD");
   useEffect(() => {
-    setPaidOrders(orderHistory.filter((order) => order.status === "HOLD"));
+    setPaidOrders(
+      orderHistory.filter(
+        (order) => order.status === "HOLD" && order.payment_mode !== "STRIPE"
+      )
+    );
   }, [orderHistory]);
   return (
     <div>

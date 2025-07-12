@@ -18,7 +18,7 @@ export default function OpenKg({ onClose }) {
   });
   const [error, setError] = useState("");
   const [shake, setShake] = useState("");
-  const [activeInput, setActiveInput] = useState("price");
+  const [activeInput, setActiveInput] = useState("price");  //change to kg
 
   const handleInputChange = (value) => {
     setError("");

@@ -8,7 +8,7 @@ import axios from 'axios'
 import macaddress from 'macaddress'
 import { ReadlineParser, SerialPort } from 'serialport'
 import WebSocket from 'ws'
-import { printer as ThermalPrinter, types as PrinterTypes,CharacterSet,BreakLine } from 'node-thermal-printer'
+import { printer as ThermalPrinter, types as PrinterTypes, CharacterSet, BreakLine } from 'node-thermal-printer'
 
 const documentsPath = process.resourcesPath
 const logFilePath = path.join(documentsPath, 'error.log')
@@ -43,7 +43,7 @@ async function accessDevice() {
   try {
     const macAddress = await fetchMacAddress()
     const response = await axios.post(
-      'http://localhost:5001/api/driver/posconfiguration/getbymac',
+      'http://13.201.57.251/api/driver/posconfiguration/getbymac',
       { mac_address: macAddress },
       {
         headers: {
@@ -63,7 +63,7 @@ async function accessDevice() {
     }
   } catch (error) {
     console.log(error);
-    
+
     console.error('Error fetching POS Configurations:', `${error.response?.data?.message}`)
     logError(error)
     app.quit()
@@ -89,9 +89,9 @@ function startWebSocketServer() {
       // flowType: false
     })
     // serialport.setMaxListeners(0);
-    parser = serialport.pipe(new ReadlineParser({ delimiter: '\r\n' })) // testing
-    // parser = serialport.pipe(new ReadlineParser({ delimiter: ' ' })) // production
-    
+    // parser = serialport.pipe(new ReadlineParser({ delimiter: '\r\n' })) // testing
+    parser = serialport.pipe(new ReadlineParser({ delimiter: ' ' })) // production
+
 
     serialport.on('close', () => {
       console.log('Serial Port Closed')
@@ -170,7 +170,7 @@ async function handleCommand(ws, parsedMessage) {
       const result = await printingMethod(data)
       ws.send(
         JSON.stringify(
-          { ...result, type: 'response' } || { success: false,type:'response', message: 'Something went wrong!' }
+          { ...result, type: 'response' } || { success: false, type: 'response', message: 'Something went wrong!' }
         )
       )
     },
@@ -182,7 +182,7 @@ async function handleCommand(ws, parsedMessage) {
     'open-drawer': async () => {
       console.log('Drawer open command received')
       const result = await openDrawer()
-      ws.send(JSON.stringify({...result,type:'response'} || { success: false,type:'response', message: 'Something went wrong!' }))
+      ws.send(JSON.stringify({ ...result, type: 'response' } || { success: false, type: 'response', message: 'Something went wrong!' }))
     },
     getposdata: () => {
       ws.send(
@@ -192,21 +192,21 @@ async function handleCommand(ws, parsedMessage) {
             message: 'Data fetched successfully',
             data: { ...device },
             type: 'posdata'
-          } || { success: false,type:'response', message: 'Something went wrong!' }
+          } || { success: false, type: 'response', message: 'Something went wrong!' }
         )
       )
     },
     zprint: async () => {
       console.log('Z-Print command received')
       const result = await zprintingMethod(data)
-      ws.send(JSON.stringify({...result,type:'response'} || { success: false,type:'response', message: 'Something went wrong!' }))
+      ws.send(JSON.stringify({ ...result, type: 'response' } || { success: false, type: 'response', message: 'Something went wrong!' }))
     },
     webprint: async () => {
       console.log('Print command received')
       const result = await webprintingMethod(data)
       ws.send(
         JSON.stringify(
-          { ...result, type: 'response' } || { success: false,type:'response', message: 'Something went wrong!' }
+          { ...result, type: 'response' } || { success: false, type: 'response', message: 'Something went wrong!' }
         )
       )
     },
@@ -215,7 +215,7 @@ async function handleCommand(ws, parsedMessage) {
       const result = await signatureprintingMethod(data)
       ws.send(
         JSON.stringify(
-          { ...result, type: 'response' } || { success: false,type:'response', message: 'Something went wrong!' }
+          { ...result, type: 'response' } || { success: false, type: 'response', message: 'Something went wrong!' }
         )
       )
     },
@@ -224,7 +224,7 @@ async function handleCommand(ws, parsedMessage) {
       const result = await merchantprintingMethod(data)
       ws.send(
         JSON.stringify(
-          { ...result, type: 'response' } || { success: false,type:'response', message: 'Something went wrong!' }
+          { ...result, type: 'response' } || { success: false, type: 'response', message: 'Something went wrong!' }
         )
       )
     },
@@ -248,7 +248,7 @@ const createSerialPort = (ws) => {
       }
       console.log('Serial Port Opened')
 
-      // startSendingCode();  //production
+      startSendingCode();  //production
     })
   }
 
@@ -305,7 +305,7 @@ const formatDate = (date) => {
 
 const printingMethod = async (data) => {
 
-
+  console.log(data.product_details)
   console.log(`tcp://${device.printer_ip}:${device.printer_port}`)
   const printer = new ThermalPrinter({
     type: PrinterTypes.EPSON,
@@ -351,10 +351,16 @@ const printingMethod = async (data) => {
   printer.bold(false)
   printer.drawLine()
   JSON.parse(data.product_details)?.map((item) => {
-    printer.leftRight(
-      `${item.name} x${item.quantity}`,
-      `$${(parseFloat(item.price) * parseFloat(item.quantity)).toFixed(2)}`
-    )
+    const itemTotal = item.size === "slider"
+      ? parseFloat(item.price) * parseFloat(item.quantity) * parseFloat(item.weight)
+      : parseFloat(item.price) * parseFloat(item.quantity);
+
+    const itemLine = item.size === "slider"
+      ? `${item.quantity}x ${item.name} "$${parseFloat(item.price).toFixed(2)}/kg x ${item.weight}kg"`
+      : `${item.quantity}x ${item.name}`;
+
+    printer.leftRight(`${itemLine}`, `$${itemTotal.toFixed(2)}`)
+
     console.log(
       `${item.name} x${item.quantity}`,
       `$${(parseFloat(item.price) * parseFloat(item.quantity)).toFixed(2)}`
@@ -416,13 +422,13 @@ const printingMethod = async (data) => {
 
 const webprintingMethod = async (data) => {
 
-console.log(data)
+  console.log(data)
 
   console.log(`tcp://${device.printer_ip}:${device.printer_port}`)
   const printer = new ThermalPrinter({
     type: PrinterTypes.EPSON,
     interface: `tcp://${device.printer_ip}:${device.printer_port}`,
-  encoding: 'utf8'
+    encoding: 'utf8'
   })
 
   printer.alignCenter()
@@ -458,9 +464,10 @@ console.log(data)
   printer.setTextNormal()
   printer.println(`Name: ${data.user_id.first_name} ${data.user_id.last_name}`)
   printer.newLine()
-  if(data.deliverytype==="delivery"){
-  printer.println( `${data.address}`)
-  printer.newLine()}
+  if (data.deliverytype === "delivery") {
+    printer.println(`${data.address}`)
+    printer.newLine()
+  }
   printer.println(`Phone: ${data.user_id.email}`)
   printer.newLine()
   printer.newLine()
@@ -519,8 +526,8 @@ console.log(data)
   printer.cut()
 
 
-  
-  
+
+
   try {
     await printer.execute()
     return { success: true, message: 'Web Printing job successfull' }
@@ -572,7 +579,7 @@ const zprintingMethod = async (printdata) => {
     if (printdata.type === 'dailySummary' || printdata.type === 'hourly') {
       if (printdata.type === 'dailySummary') {
         printer.println('DAILY SUMMARY')
-      }else{
+      } else {
         printer.println('HOURLY REPORT')
       }
       printer.println()
@@ -621,12 +628,12 @@ const zprintingMethod = async (printdata) => {
       // printer.println(`Surcharge: ${printdata.data.data.totalSurcharge}`)
       printer.bold(false)
       printer.setTextNormal()
-      printer.println(`TOTAL is include Surcharge`)
+      // printer.println(`TOTAL is include Surcharge`)
       printer.drawLine()
       printer.println()
       printer.println(`Z Reading`)
     }
-    else if (printdata.type === 'hold'){
+    else if (printdata.type === 'hold') {
       printer.println("HOLD");
       printer.println()
       printer.setTextNormal();
@@ -636,7 +643,7 @@ const zprintingMethod = async (printdata) => {
       printer.alignRight();
       printer.println(`Count`)
       printer.alignLeft();
-      printer.leftRight(`HOLD: ${printdata.allData.totalAmount}`,`${printdata.allData.count}`);
+      printer.leftRight(`HOLD: ${printdata.allData.totalAmount}`, `${printdata.allData.count}`);
       // printer.println(`${data.holdSalesCount}`)
       // printer.println(`${data.holdSubAmount}`)
       // printer.println(`${data.holdDiscount}`)
@@ -660,19 +667,19 @@ const zprintingMethod = async (printdata) => {
 
 
 
- const merchantprintingMethod=async (data)=>{
+const merchantprintingMethod = async (data) => {
   console.log(data);
   const printer = new ThermalPrinter({
     type: PrinterTypes.EPSON,
     interface: `tcp://${device.printer_ip}:${device.printer_port}`,
-    characterSet:CharacterSet.WPC1252,
+    characterSet: CharacterSet.WPC1252,
     breakLine: BreakLine.NONE,
     width: 80
   });
   printer.alignCenter();
   printer.println(`${data}`);
-  
-  
+
+
   printer.cut();
   try {
     await printer.execute();
@@ -682,7 +689,7 @@ const zprintingMethod = async (printdata) => {
     console.log("Print failed:", error.message);
     return { success: false, message: error.message }
   }
- }
+}
 
 
 

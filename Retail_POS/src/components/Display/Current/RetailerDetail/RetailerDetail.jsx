@@ -1,40 +1,42 @@
-import { useEffect, useState, useRef } from 'react';
-import './RetailerDetail.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchBarcodeProductbyBarcode } from '../../../../api/fetchBarcodeProductbyBarcode';
-import { v4 as uuidv4 } from 'uuid';
-import { showOrder } from '../../../../feature/displayOrderSlice';
+import { useEffect, useState, useRef } from "react";
+import "./RetailerDetail.css";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBarcodeProductbyBarcode } from "../../../../api/fetchBarcodeProductbyBarcode";
+import { v4 as uuidv4 } from "uuid";
+import { showOrder } from "../../../../feature/displayOrderSlice";
 const RetailerDetail = () => {
   const dispatch = useDispatch();
-  const posData = useSelector(state => state.posData)
-  const inputRef = useRef('');
-  const [input, setInput] = useState('');
+  const posData = useSelector((state) => state.posData);
+  const inputRef = useRef(null); // for DOM element
+  const barcodeBufferRef = useRef(""); // for accumulating barcode characters
+  const [input, setInput] = useState("");
   const typingTimerRef = useRef(null);
   const fetchBarcodeproduct = async (barcode) => {
-
-      try {
-
-        const res = await fetchBarcodeProductbyBarcode(barcode, posData?.store?._id)
-        if (res) {
-          dispatch(
-            showOrder({
-              name: res.name,
-              weight: 0,
-              id: res._id,
-              price: res.sell_price,
-              size: res.size,
-              quantity: res.quantity,
-              uniqueId: uuidv4()
-            })
-          )
-        }
-        setInput('');
-      } catch (err) {
-        console.error('Error fetching barcode:', err)
+    try {
+      const res = await fetchBarcodeProductbyBarcode(
+        barcode,
+        posData?.store?._id
+      );
+      console.log(res);
+      if (res) {
+        console.log("Disptach PRoduct....");
+        dispatch(
+          showOrder({
+            name: res.name,
+            weight: 0,
+            id: res._id,
+            price: res.sell_price,
+            size: res.size,
+            quantity: res.quantity,
+            uniqueId: uuidv4(),
+          })
+        );
       }
-
-
-  }
+      setInput("");
+    } catch (err) {
+      console.error("Error fetching barcode:", err);
+    }
+  };
 
   useEffect(() => {
     // let typingTimer;
@@ -43,27 +45,29 @@ const RetailerDetail = () => {
     const handleKeyDown = (event) => {
       // Clear the previous timeout
       clearTimeout(typingTimerRef.current);
-      setInput('');
-      inputRef.current += event.key;
+      // setInput("");
+      // inputRef.current += event.key;
       // console.log(inputRef.current);
-      if (/^\d{4,30}$/.test(inputRef.current)) {
+      barcodeBufferRef.current += event.key;
+      console.log(barcodeBufferRef.current);
+      if (/^\d{4,30}$/.test(barcodeBufferRef.current)) {
         // console.log("inputRef",inputRef.current);
-        fetchBarcodeproduct(inputRef.current);
-        setInput(inputRef.current);
+        fetchBarcodeproduct(barcodeBufferRef.current);
+        setInput(barcodeBufferRef.current);
       }
       // Debounce logic
       typingTimerRef.current = setTimeout(() => {
-        inputRef.current = '';
+        barcodeBufferRef.current = "";
       }, debounceInterval);
     };
-     // // Add the event listener when the component mounts
-     window.addEventListener('keydown', handleKeyDown);
+    // // Add the event listener when the component mounts
+    window.addEventListener("keydown", handleKeyDown);
 
-     // // Remove the event listener when the component unmounts
-     return () => {
-         window.removeEventListener('keydown', handleKeyDown);
-         clearTimeout(typingTimerRef.current);
-     };
+    // // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      clearTimeout(typingTimerRef.current);
+    };
     // if (document.activeElement.id === 'scan') {
     //   clearTimeout(typingTimer);
     //   const newInput = event.key;
@@ -100,11 +104,10 @@ const RetailerDetail = () => {
     //   window.removeEventListener('keydown', handleKeyDown);
     //   clearTimeout(typingTimer);
     // };
-
   }, []);
   const handleBarcodeChange = (e) => {
     // setScannnedBarcode(e.target.value)
-  }
+  };
   return (
     <div className="retailer-detail">
       <div className="phone">
@@ -118,10 +121,10 @@ const RetailerDetail = () => {
       </div>
       <div className="scan">
         <label htmlFor="scan">Scan.. : </label>
-        <input type="text" id="scan" value={input}  ref={inputRef} readOnly/>
+        <input type="text" id="scan" value={input} ref={inputRef} readOnly />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RetailerDetail
+export default RetailerDetail;

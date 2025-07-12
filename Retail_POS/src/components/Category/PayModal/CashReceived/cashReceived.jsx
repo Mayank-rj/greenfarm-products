@@ -5,21 +5,31 @@ import { changeBgBtn } from "../../../../assets/btn-bg";
 import { clearOrder } from "../../../../feature/displayOrderSlice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { sendMessage } from "../../../../app/driverConnection";
 
-export default function CashReceived ({ handlePrint,sendOrderDetails,onClose, changeAmount,printData }) {
+export default function CashReceived({
+  handlePrint,
+  sendOrderDetails,
+  onClose,
+  changeAmount,
+  printData,
+}) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   // console.log(changeAmount)
-  const dispatch=useDispatch()
-  const handleClick =async () => {
+  const dispatch = useDispatch();
+  const handleClick = async () => {
     if (isSubmitting) return;
     setIsSubmitting(true);
-    try{
-      await sendOrderDetails("cash","paid",0,0);
+    try {
+      await sendOrderDetails("cash", "paid", 0, 0);
       dispatch(clearOrder());
+      sendMessage({
+        command: "open-drawer",
+      });
       onClose();
-    }catch(error){
-      console.log("Error Calling Send Order API: ", error)
-    }finally{
+    } catch (error) {
+      console.log("Error Calling Send Order API: ", error);
+    } finally {
       setIsSubmitting(false);
     }
 
@@ -27,7 +37,7 @@ export default function CashReceived ({ handlePrint,sendOrderDetails,onClose, ch
   };
   const printHandler = () => {
     handlePrint({ ...printData, payment_mode: "cash", status: "paid" });
-  }
+  };
   return (
     <>
       <div className="cash-container">
@@ -35,7 +45,7 @@ export default function CashReceived ({ handlePrint,sendOrderDetails,onClose, ch
         <h3 className="output-box">${changeAmount}</h3>
         <div className="btn-box">
           <Button
-            item={isSubmitting ? "Processing" :"OK"}
+            item={isSubmitting ? "Processing" : "OK"}
             handleClick={handleClick}
             style={{ backgroundColor: "blue" }}
             background={changeBgBtn[0]}

@@ -49,6 +49,7 @@ const ProductManage = ({ edit, heading }) => {
     unit: "",
     quantity: "",
     sub_category: "",
+    pos_price: "",
   };
 
   const unitData = [
@@ -157,7 +158,7 @@ const ProductManage = ({ edit, heading }) => {
     }
     setErrors({ ...errors, [e.target.name]: "" });
   };
- 
+
   const handleImageSet = (value) => {
     // if (index === 0) {
     setProductInfo({ ...productInfo, cover: value });
@@ -506,6 +507,39 @@ const ProductManage = ({ edit, heading }) => {
               helperText={errors.in_stock}
               handleOnChange={handleOnChange}
               isRequired={true}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 12, md: 6 }}>
+                <TextField
+              label="POS Price"
+              name="pos_price"
+              value={productInfo.pos_price || ""} // Ensure empty value is handled properly
+              error={!!errors.pos_price}
+              helperText={errors.pos_price}
+              onChange={(e) => {
+                const rawValue = e.target.value;
+                if (rawValue === "") {
+                  handleOnChange({
+                    target: { name: e.target.name, value: rawValue },
+                  });
+                } else {
+                  const regex = /^\d+(\.\d{0,2})?$/;
+                  // If the input is not a valid integer or is out of the range 0-100, ignore it
+                  if (
+                    !isNaN(rawValue) &&
+                    rawValue >= 0 &&
+                    regex.test(rawValue)
+                  ) {
+                    handleOnChange({
+                      target: { name: e.target.name, value: rawValue },
+                    });
+                  }
+                }
+              }}
+              variant="outlined"
+              inputMode="numeric"
+              fullWidth
+              required
             />
           </Grid>
           {productInfo.size === "variations" && (

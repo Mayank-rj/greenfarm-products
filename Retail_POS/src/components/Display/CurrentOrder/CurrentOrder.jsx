@@ -147,7 +147,7 @@ const CurrentOrder = () => {
 
       if (orders) {
         if (response) {
-          // console.log(response)
+          console.log(response)
           sendMessage({
             command: "print",
             data: response,

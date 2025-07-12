@@ -8,7 +8,9 @@ import {
   faGear,
   faGlobe,
   faRectangleList,
+  faBell,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { footerbgBtn } from "../../assets/btn-bg";
 import "./Footer.css";
 import { useEffect, useMemo, useState } from "react";
@@ -22,6 +24,7 @@ import { ConfirmationModal } from "../Modal/ConfirmationModal/ConfirmationModal"
 import { toast } from "react-toastify";
 import { sendMessage, socket } from "../../app/driverConnection";
 import { setWebOrderBadgeCount } from "../../feature/webOrderBadgeSlice";
+import { width } from "@fortawesome/free-brands-svg-icons/faSearchengin";
 // const socket = io(SITE_CONFIG.socketIp)
 const Footer = () => {
   const { webOrder, orders } = useSelector((state) => state.footer);
@@ -40,23 +43,20 @@ const Footer = () => {
   const [badgeCount, setBadgeCount] = useState(0);
 
   const handleWebOrdersButtonClick = () => {
-    
-    if(!webOrder){
-      dispatch(setWebOrderBadgeCount(badgeCount)) 
+    if (!webOrder) {
+      dispatch(setWebOrderBadgeCount(badgeCount));
       setBadgeCount(0);
       localStorage.setItem("previousWebOrderCount", currentWebOrderCount);
       setPreviousWebOrderCount(currentWebOrderCount);
     }
-      dispatch(toggleWebOrder());
-    
-    
+    dispatch(toggleWebOrder());
   };
 
   const buttons = [
     {
       text: "CLEAR",
       icon: faDeleteLeft,
-      
+
       disabled: webOrder || orders,
       action: () => {
         if (displayOrder.length > 0) {
@@ -95,7 +95,7 @@ const Footer = () => {
     {
       text: "DRAWER",
       icon: faCashRegister,
-      
+
       disabled: false,
       action: () => {
         sendMessage({
@@ -117,7 +117,7 @@ const Footer = () => {
     {
       text: "BARCODE",
       icon: faBarcode,
-      
+
       disabled: display.length === 0 ? false : true,
       action: () => Navigate(`barcodeproducts`),
       style: {
@@ -128,7 +128,7 @@ const Footer = () => {
     {
       text: "REPORTS",
       icon: faBookOpen,
-      
+
       disabled: display.length === 0 ? false : true,
       action: () => Navigate(`reports`),
       style: {
@@ -139,7 +139,7 @@ const Footer = () => {
     {
       text: "SETTINGS",
       icon: faGear,
-      
+
       disabled: display.length === 0 ? false : true,
       action: () => Navigate(`setting`),
       style: {
@@ -187,14 +187,28 @@ const Footer = () => {
       clearInterval(intervalId);
     };
   }, [posData]);
- 
+
   useEffect(() => {
     if (currentWebOrderCount > previousWebOrderCount) {
       setBadgeCount(currentWebOrderCount - previousWebOrderCount);
+
+      // //Web Order Alert..
+      // setOpenModal(true);
+      // setModalContent(
+      //   <div className="flex items-center flex-col">
+      //     <FontAwesomeIcon icon={faBell} className="text-yellow-500 fa-shake text-4xl" />
+      //     <h1 className="text-2xl font-bold my-8">
+      //       New Web Order Received....
+      //     </h1>
+      //     <Button
+      //       item={"OK"}
+      //       style={{ width: "200px" }}
+      //       handleClick={() => setOpenModal(false)}
+      //     />
+      //   </div>
+      // );
     }
   }, [currentWebOrderCount, previousWebOrderCount]);
-
-
 
   return (
     <div className="footer">
@@ -210,7 +224,7 @@ const Footer = () => {
               icon={button.icon}
               disabled={button.disabled}
             />
-            {button.notification && badgeCount !== 0 && !webOrder &&(
+            {button.notification && badgeCount !== 0 && !webOrder && (
               <div className="notification-icon">
                 <span className="badge">{badgeCount}</span>
               </div>

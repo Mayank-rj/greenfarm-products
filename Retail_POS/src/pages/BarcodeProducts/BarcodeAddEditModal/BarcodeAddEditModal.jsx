@@ -21,7 +21,8 @@ const BarcodeAddEditModal = ({ data = {}, onConfirm }) => {
   const [categories, setCategories] = useState([]);
   const [inputFocused, setInputFocused] = useState("");
   const [errors, setErrors] = useState({});
-  const inputRef = useRef("");
+  const inputRef = useRef(null); // For DOM
+  const barcodeBufferRef = useRef(""); // For collecting keys
   const typingTimerRef = useRef(null);
   const debounceInterval = 300;
   const posData = useSelector((state) => state.posData);
@@ -90,15 +91,15 @@ const BarcodeAddEditModal = ({ data = {}, onConfirm }) => {
     const handleKeyDown = (event) => {
       // Clear the previous timeout
       clearTimeout(typingTimerRef.current);
-      setBarcode("");
-      inputRef.current += event.key;
-      // console.log(inputRef.current);
-      if (/^\d+$/.test(inputRef.current)) {
-        setBarcode(inputRef.current);
+      // Append numeric keys to barcode buffer
+      barcodeBufferRef.current += event.key;
+      // console.log(barcodeBufferRef.current);
+      if (/^\d+$/.test(barcodeBufferRef.current)) {
+        setBarcode(barcodeBufferRef.current);
       }
       // Debounce logic
       typingTimerRef.current = setTimeout(() => {
-        inputRef.current = "";
+        barcodeBufferRef.current = "";
       }, debounceInterval);
     };
     const inputElement = inputRef.current;
@@ -172,7 +173,6 @@ const BarcodeAddEditModal = ({ data = {}, onConfirm }) => {
             value={barcode}
             onFocus={() => setInputFocused("barcode")}
             onChange={(e) => {
-              setBarcode(e.target.value);
               setErrors((prev) => ({ ...prev, barcode: "" }));
             }}
             className="mt-1 p-2 border border-[#5e7784] rounded w-full"
