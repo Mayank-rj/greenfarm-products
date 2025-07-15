@@ -41,7 +41,7 @@ export default function CustomerScreen() {
                 <tr key={item.uniqueId}>
                   <td>
                     {item.quantity} x {item.name.toUpperCase()}
-                     {/* - ${item.price}/kg x {item.weight}kg */}
+                     - ${item.price}/kg x {item.weight}kg
                   </td>
                   <td style={{ textAlign: 'right' }}>
                     ${' '}

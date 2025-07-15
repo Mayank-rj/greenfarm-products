@@ -7,7 +7,7 @@ const SITE_CONFIG = {
   // imageUrl: "http://13.201.57.251/images/",
   imageUrl: "http://13.203.57.229/images/",
   apiToken: "a1b2c3d4",
-  POS_VERSION: "4.2.6",
+  POS_VERSION: "4.3.0",
   basePath: "retailpos",
   socketIp:"http://localhost:3737"
 };

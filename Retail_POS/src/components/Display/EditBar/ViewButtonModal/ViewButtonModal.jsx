@@ -58,8 +58,6 @@ export default function ViewButtonModal({ viewButtonOrder, onClose }) {
       ? (viewButtonOrder.sub_total - viewButtonOrder.discount).toFixed(2)
       : viewButtonOrder.grand_total.toFixed(2);
 
-  // console.log(productDetails);
-
   // const getuser = async () => {
   //   if (viewButtonOrder.user_id) {
   //     console.log(viewButtonOrder.user_id)
@@ -104,16 +102,12 @@ export default function ViewButtonModal({ viewButtonOrder, onClose }) {
 
   const handlePrint = async () => {
     if (viewButtonOrder.order_type === "pos") {
-      if (viewButtonOrder.status === "HOLD") {
-        toast.error("Hold order not print");
-      } else {
         if (prindata) {
           sendMessage({
             command: "print",
             data: prindata,
           });
         }
-      }
     } else {
       if (prindata) {
         sendMessage({
@@ -209,6 +203,10 @@ export default function ViewButtonModal({ viewButtonOrder, onClose }) {
           <tbody>
             {productDetails?.map((order, i) => {
               console.log(order);
+              const sell_price =
+                viewButtonOrder?.order_type === "pos"
+                  ? order?.product?.sell_price
+                  : order?.product?.sell_price;
               const quantity = Number(order.quantity) || 0;
               const weight = Number(order.weight) || 0;
               const product = order?.product || {};
@@ -221,7 +219,7 @@ export default function ViewButtonModal({ viewButtonOrder, onClose }) {
                   ? Number(product?.price)
                   : product?.size === "variations" && order?.variationId
                   ? variationPrice
-                  : Number(product?.sell_price) ||
+                  : Number(sell_price) ||
                     Number(order?.sell_price) ||
                     Number(order?.price) ||
                     0;
@@ -231,7 +229,7 @@ export default function ViewButtonModal({ viewButtonOrder, onClose }) {
                   ? variationPrice * quantity
                   : order?.size === "slider"
                   ? Number(
-                      product?.sell_price ||
+                      sell_price ||
                         Number(order?.sell_price) ||
                         Number(order?.price) ||
                         0
@@ -239,7 +237,7 @@ export default function ViewButtonModal({ viewButtonOrder, onClose }) {
                     quantity *
                     weight
                   : Number(
-                      product?.sell_price ||
+                      sell_price ||
                         Number(order?.sell_price) ||
                         Number(order?.price) ||
                         0

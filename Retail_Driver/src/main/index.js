@@ -52,7 +52,7 @@ async function accessDevice() {
       }
     )
     if (response.data.success) {
-      console.log(response.data)
+      // console.log(response.data)
       device = response.data.data
 
       createWindow()
@@ -356,15 +356,12 @@ const printingMethod = async (data) => {
       : parseFloat(item.price) * parseFloat(item.quantity);
 
     const itemLine = item.size === "slider"
-      ? `${item.quantity}x ${item.name} "$${parseFloat(item.price).toFixed(2)}/kg x ${item.weight}kg"`
+      ? `${item.quantity}x ${item.name} \n\t"$${parseFloat(item.price).toFixed(2)}/kg x ${item.weight}kg"`
       : `${item.quantity}x ${item.name}`;
 
     printer.leftRight(`${itemLine}`, `$${itemTotal.toFixed(2)}`)
 
-    console.log(
-      `${item.name} x${item.quantity}`,
-      `$${(parseFloat(item.price) * parseFloat(item.quantity)).toFixed(2)}`
-    )
+    console.log(`${itemLine}`, `$${itemTotal.toFixed(2)}`)
 
     // item.variations.map(varItem => {
     //   printer.leftRight(`  -${varItem.name}`, `$${(parseFloat(varItem.sell_price)).toFixed(2)}`);
@@ -392,13 +389,19 @@ const printingMethod = async (data) => {
     printer.leftRight('Tendered', `$${data.tender_amount.toFixed(2)}`)
     printer.leftRight('Change', `$${data.change_amount.toFixed(2)}`)
   }
-  if (data.payment_mode === 'eftpos' || data.payment_mode === 'split payment') {
+  if (data.payment_mode === 'split payment') {
     printer.leftRight('Cash amount', `$${data.split_cash_amount.toFixed(2)}`)
     printer.leftRight('Card amount', `$${data.split_card_amount.toFixed(2)}`)
   }
   printer.alignCenter()
   printer.drawLine()
-  printer.println(`PAYMENT MODE '${data.payment_mode.toUpperCase()}'`)
+  if (data.status.toUpperCase() === "PAID") {
+    printer.println(`PAYMENT MODE '${data.payment_mode.toUpperCase()}'`)
+  }
+  if (data.status.toUpperCase() === "HOLD") {
+    printer.println(`'HOLD ORDER'`)
+  }
+
   printer.drawLine()
   // printer.println("Support the local business by following and");
   // printer.println("sharing us on Instagram");

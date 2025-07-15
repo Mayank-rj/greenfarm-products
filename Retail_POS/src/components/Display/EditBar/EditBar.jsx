@@ -143,7 +143,7 @@ const EditBar = () => {
         address: "123, Street Name, City, Country",
         sub_total: totalRoundOff, // Replace with valid subTotal value
         surcharge: 0,
-        delivery_charge: 10,
+        delivery_charge: 0,
         coupon_code: "NO_COUPON", // Replace with valid coupon code if available
         discount: 0,
         order_type: "pos",

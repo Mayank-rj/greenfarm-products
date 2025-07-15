@@ -54,7 +54,7 @@ const PayModal = ({ onClose }) => {
   const Amount = (Math.round(totalRoundOff * 20) / 20).toFixed(2);
   const discountAmount = (Math.round(disAmount * 20) / 20).toFixed(2);
 
-  // console.log("discountAmount", discountAmount);
+  // console.log("displayOrder", displayOrder);
   // console.log("disAmount", disAmount);
 
   useEffect(() => {
@@ -326,9 +326,9 @@ const PayModal = ({ onClose }) => {
         setWidth({ width: "50%" });
         // console.log(changeAmount);
         //open drawer on click accept cash
-        // sendMessage({
-        //   command: "open-drawer",
-        // });
+        sendMessage({
+          command: "open-drawer",
+        });
         setModalContent(
           <CashReceived
             sendOrderDetails={sendOrderDetails}

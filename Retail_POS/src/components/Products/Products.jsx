@@ -60,7 +60,7 @@ const Products = () => {
         })
       );
     }
-    // console.log(item);
+    console.log(item);
 
   }
 
@@ -81,6 +81,7 @@ const Products = () => {
       </div>
     )
   }
+
   return (
     <div className="product-container">
       {categoryId === "" ? (
@@ -99,7 +100,7 @@ const Products = () => {
                 <ProductCard
                   img={`${imageUrl}${item.cover}`}
                   item={item.name}
-                  price={item.sell_price.toFixed(2)}
+                  price={item?.sell_price?.toFixed(2)}
                   handleClick={() => handleProductCardClick(item)}
                   disabled={webOrder || orders}
                 />

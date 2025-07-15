@@ -351,14 +351,14 @@ function Cardpayment({
                 <div className="grid grid-cols-2 gap-2 mt-4">
                   <Button
                     item="Retry"
-                    className="bg-yellow-500 text-white px-6 py-4 rounded-lg hover:bg-yellow-600 mx-2"
+                    className="bg-yellow-500 text-black px-6 py-4 rounded-lg hover:bg-yellow-600 mx-2"
                     style={{ backgroundColor: "#ECC94B" }}
                     handleClick={handleRetryTransaction}
                     background={eftposBgBtn[4]}
                   />
                   <Button
                     item="Cancel"
-                    className="bg-gray-300 text-gray-700 px-6 py-4 rounded-lg hover:bg-gray-400 mx-2"
+                    className="bg-gray-300 text-black px-6 py-4 rounded-lg hover:bg-gray-400 mx-2"
                     style={{ backgroundColor: "#E2E8F0" }}
                     handleClick={() => {
                       localStorage.removeItem("transactionMessage");

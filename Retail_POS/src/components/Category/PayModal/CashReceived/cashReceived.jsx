@@ -23,9 +23,9 @@ export default function CashReceived({
     try {
       await sendOrderDetails("cash", "paid", 0, 0);
       dispatch(clearOrder());
-      sendMessage({
-        command: "open-drawer",
-      });
+      // sendMessage({
+      //   command: "open-drawer",
+      // });
       onClose();
     } catch (error) {
       console.log("Error Calling Send Order API: ", error);

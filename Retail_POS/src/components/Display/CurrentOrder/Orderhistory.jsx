@@ -139,7 +139,7 @@ const OrderHistory = ({ search, setSearch }) => {
                           : "status-cancelled"
                       }`}
                     >
-                      {order.status}
+                      {order?.status?.toUpperCase()}
                     </label>
                   </td>
                   <td onClick={(e) => handleRowClick(order, e)}>
@@ -151,10 +151,10 @@ const OrderHistory = ({ search, setSearch }) => {
                   </td>
                   <td onClick={(e) => handleRowClick(order, e)}>
                     <label>
-                      $
-                      {order.payment_mode === "eftpos"
+                      ${order.grand_total.toFixed(2)}
+                      {/* {order.payment_mode === "eftpos"
                         ? (order.sub_total - order.discount).toFixed(2)
-                        : order.grand_total.toFixed(2)}
+                        : order.grand_total.toFixed(2)} */}
                     </label>
                   </td>
                 </tr>

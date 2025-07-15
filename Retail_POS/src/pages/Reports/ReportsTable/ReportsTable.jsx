@@ -121,6 +121,7 @@ const ReportsTable = ({ groupedData, type }) => {
       dispatch(showExcelDetail({ data: excelInfo, name: `${name}  ${text}` }));
     }
   }, [groupedData]);
+  
   useEffect(() => {
     // console.log("hello");
     console.log(startHourlyTime, endHourlyTime);
