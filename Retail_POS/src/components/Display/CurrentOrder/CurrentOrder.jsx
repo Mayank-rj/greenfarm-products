@@ -106,7 +106,10 @@ const CurrentOrder = () => {
       // console.log(viewButtonOrder);
 
       if (orders) {
-        if (Object.keys(viewButtonOrder).length !== 0) {
+        if (
+          Object.keys(viewButtonOrder).length !== 0 &&
+          viewButtonOrder.status === "paid"
+        ) {
           response = viewButtonOrder;
         }
       } else if (webOrder) {

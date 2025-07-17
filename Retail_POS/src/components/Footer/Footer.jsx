@@ -100,9 +100,9 @@ const Footer = () => {
 
       disabled: false,
       action: () => {
-        setOpenModal(true);
-        setModalContent(<DrawerPin handleClose={handleClose} />);
-
+        // setOpenModal(true);
+        // setModalContent(<DrawerPin handleClose={handleClose} />);
+        sendMessage({ command: "open-drawer" });
         // if (socket.connected) {
         //   socket.emit("message", {
         //     command: "open-drawer",
@@ -249,7 +249,7 @@ const Footer = () => {
 
 export default Footer;
 
-const DrawerPin = ({handleClose}) => {
+const DrawerPin = ({ handleClose }) => {
   const dispatch = useDispatch();
   const [pin, setPin] = useState(["", "", "", ""]);
   const [inputFocused, setInputFocused] = useState(false);
@@ -290,7 +290,7 @@ const DrawerPin = ({handleClose}) => {
     if (numericOnly.length <= 4) {
       const digits = numericOnly.split("").slice(0, 4);
       const paddedDigits = [...digits, "", "", "", ""].slice(0, 4); // Ensure 4-length array
-      console.log(paddedDigits)
+      console.log(paddedDigits);
       setPin(paddedDigits);
 
       // Focus the next empty field
@@ -312,8 +312,8 @@ const DrawerPin = ({handleClose}) => {
       dispatch(authenticate());
       setErrorMessage("");
       sendMessage({ command: "open-drawer" });
-      handleClose()
-      toast.success("Drawer Opened successfully")
+      handleClose();
+      toast.success("Drawer Opened successfully");
       // navigate('/settings'); // Adjust the path as necessary
     } else {
       setErrorMessage("Enter correct PIN");

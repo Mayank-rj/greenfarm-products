@@ -8,7 +8,7 @@ export const adminEmail = (orderDetail, userprofile, store) => {
 
   return {
     // to:["pos.sendemail@gmail.com", "surajjohal1@yahoo.com.au"], // Hotel admin email
-    to: ["mayank@kodeklan.com"],
+    to: ["mayank.kumar.rajoria@gmail.com"],
     subject: `New Order Received - ${orderDetail.order_number}`,
     html: `
       <h1>New Order Received</h1>

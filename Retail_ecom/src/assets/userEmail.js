@@ -11,8 +11,8 @@ export const userEmail = (orderDetail, userprofile, store) => {
 
   return {
     to: `${userprofile.email}`,
-    // to: ["mayank.kumar.rajoria@gmail.com"],
-    cc: ["pos.sendemail@gmail.com", "vivek.singh8386@outlook.com"],
+    // to: ["mayank.kumar.rajoria@gmail.com",pos.sendemail@gmail.com],
+    cc: ["onlineorder@greenfarmproducts.com.au", "surajjohal1@yahoo.com.au"],
     html: `
         <h1>Order Confirmation</h1>
        <p>Dear Customer (${userprofile.first_name} ${userprofile.last_name}),</p>

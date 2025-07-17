@@ -43,6 +43,7 @@ async function accessDevice() {
   try {
     const macAddress = await fetchMacAddress()
     const response = await axios.post(
+      // 'https://retailpos.greenfarmproducts.com.au/api/driver/posconfiguration/getbymac',
       'http://13.201.57.251/api/driver/posconfiguration/getbymac',
       { mac_address: macAddress },
       {
@@ -356,7 +357,7 @@ const printingMethod = async (data) => {
       : parseFloat(item.price) * parseFloat(item.quantity);
 
     const itemLine = item.size === "slider"
-      ? `${item.quantity}x ${item.name} \n\t"$${parseFloat(item.price).toFixed(2)}/kg x ${item.weight}kg"`
+      ? `${item.quantity}x ${item.name} "$${parseFloat(item.price).toFixed(2)}/kg x ${item.weight}kg"`
       : `${item.quantity}x ${item.name}`;
 
     printer.leftRight(`${itemLine}`, `$${itemTotal.toFixed(2)}`)
@@ -398,9 +399,9 @@ const printingMethod = async (data) => {
   if (data.status.toUpperCase() === "PAID") {
     printer.println(`PAYMENT MODE '${data.payment_mode.toUpperCase()}'`)
   }
-  if (data.status.toUpperCase() === "HOLD") {
-    printer.println(`'HOLD ORDER'`)
-  }
+  // if (data.status.toUpperCase() === "HOLD") {
+  //   printer.println(`'HOLD ORDER'`)
+  // }
 
   printer.drawLine()
   // printer.println("Support the local business by following and");

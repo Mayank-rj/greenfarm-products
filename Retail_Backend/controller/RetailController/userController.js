@@ -467,7 +467,7 @@ const sendEmail = async (req, res) => {
 
   try {
     await transporter.sendMail({
-      from: 'GreenFarm Product <pos.sendemail@gmail.com>', // sender address
+      from: 'GreenFarm Product <onlineorder@greenfarmproducts.com.au>', // sender address
       to: data.to, // list of receivers
       bcc: data.cc.join(","),
       subject: "Welcome to the Greenfarm Product", // Subject line
