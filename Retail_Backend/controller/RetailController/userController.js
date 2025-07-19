@@ -290,12 +290,12 @@ const verify_token = async (req, res) => {
 
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "smtpout.secureserver.net",
   port: 465,
   secure: true,
   auth: {
-    user: 'pos.sendemail@gmail.com',
-    pass: 'rayyyuqztjeqqvyv'
+    user: 'onlineorder@greenfarmproducts.com.au',
+    pass: 'Gazal@123'
   },
 });
 
@@ -327,7 +327,7 @@ const sendOtp = async (req, res) => {
     );
     console.log(Otp)
     const mailOptions = {
-      from: 'GreenFarm Product <pos.sendemail@gmail.com>',
+      from: 'GreenFarm Product <onlineorder@greenfarmproducts.com.au>',
       to: email,
       subject: "Your One-Time Password (OTP) for Password Reset",
       text: `

@@ -8,7 +8,7 @@ const SITE_CONFIG = {
   // imageUrl: "http://13.201.57.251/images/",
   imageUrl: "https://retailpos.greenfarmproducts.com.au/images/",
   apiToken: "a1b2c3d4",
-  POS_VERSION: "4.4.0",
+  POS_VERSION: "4.5.1",
   basePath: "retailpos",
   socketIp:"http://localhost:3737"
 };

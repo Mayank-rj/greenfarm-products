@@ -28,7 +28,6 @@ export default function ViewButtonModal({ viewButtonOrder, onClose }) {
   // const originalDateTimeString = viewButtonOrder[3]
   console.log(viewButtonOrder);
 
-
   useEffect(() => {
     const originalDate = new Date(viewButtonOrder.date_time);
 
@@ -57,9 +56,9 @@ export default function ViewButtonModal({ viewButtonOrder, onClose }) {
   const adjustedGrandTotal =
     viewButtonOrder.payment_mode === "eftpos"
       ? (
-        (viewButtonOrder.sub_total - viewButtonOrder.discount) *
-        1.015
-      ).toFixed(2)
+          (viewButtonOrder.sub_total - viewButtonOrder.discount) *
+          1.015
+        ).toFixed(2)
       : viewButtonOrder.grand_total.toFixed(2);
 
   // console.log(productDetails);
@@ -106,20 +105,19 @@ export default function ViewButtonModal({ viewButtonOrder, onClose }) {
   // }, []);
   console.log(viewButtonOrder);
 
-
   const handlePrint = async () => {
     if (viewButtonOrder.order_type === "pos") {
-      if (viewButtonOrder.status === "HOLD") {
-        toast.error("Hold order not print")
+      // if (viewButtonOrder.status === "HOLD") {
+      //   toast.error("Hold order not print")
+      // }
+      // else {
+      if (prindata) {
+        sendMessage({
+          command: "print",
+          data: prindata,
+        });
       }
-      else {
-        if (prindata) {
-          sendMessage({
-            command: "print",
-            data: prindata,
-          });
-        }
-      }
+      // }
     } else {
       if (prindata) {
         sendMessage({
@@ -198,8 +196,9 @@ export default function ViewButtonModal({ viewButtonOrder, onClose }) {
         )}
       </div>
       <div
-        className={`max-h-[15vw] overflow-y-auto ${viewButtonOrder?.order_type === "pos" && "mt-4"
-          }`}
+        className={`max-h-[15vw] overflow-y-auto ${
+          viewButtonOrder?.order_type === "pos" && "mt-4"
+        }`}
       >
         <table>
           <thead className="sticky top-0">
@@ -217,39 +216,55 @@ export default function ViewButtonModal({ viewButtonOrder, onClose }) {
                 <td style={{ textAlign: "center" }}>{order.quantity}</td>
                 <td>
                   {" "}
-                  {
-                    order.order_type === "pos"
-                      ? order?.product?.name
-                      : order?.product?.size === "variations" && order?.variationId
-                        ? `${order?.product?.name} - ${order?.product?.variations.find(
+                  {order.order_type === "pos"
+                    ? order?.product?.name
+                    : order?.product?.size === "variations" &&
+                      order?.variationId
+                    ? `${order?.product?.name} - ${
+                        order?.product?.variations.find(
                           (item1) => item1?._id === order?.variationId
                         )?.name || ""
-                        }`
-                        : order?.product?.name || order?.name
-                  }
-
+                      }`
+                    : order?.product?.name || order?.name}
                 </td>
                 <td style={{ textAlign: "end" }}>
-                  {
-                    order.order_type === "pos"
-                      ? order?.product?.price
-                      : order?.product?.size === "variations" && order?.variationId
-                        ? order?.product?.variations
-                          .find((item1) => item1?._id === order?.variationId)
-                          ?.sell_price?.toFixed(2) || "0.00"
-                        : order?.product?.sell_price?.toFixed(2) ||
-                        order?.sell_price?.toFixed(2) ||
-                        order?.price?.toFixed(2) || "0.00"
-                  }
-
+                  {order.order_type === "pos"
+                    ? order?.product?.price
+                    : order?.product?.size === "variations" &&
+                      order?.variationId
+                    ? order?.product?.variations
+                        .find((item1) => item1?._id === order?.variationId)
+                        ?.sell_price?.toFixed(2) || "0.00"
+                    : order?.product?.sell_price?.toFixed(2) ||
+                      order?.sell_price?.toFixed(2) ||
+                      order?.price?.toFixed(2) ||
+                      "0.00"}
                 </td>
                 <td style={{ textAlign: "end" }}>{order.weight} kg</td>
-                {order?.product?.size === "variations" && order?.variationId
-                ?
-                <td style={{ textAlign: "end" }}> ${((order?.product?.variations?.[0]?.sell_price || 0) * order.quantity).toFixed(2)}</td>:
-                <td style={{ textAlign: "end" }}>${(order?.product?.sell_price*order.quantity).toFixed(2)}</td>
-            
-}
+
+                {order?.product?.size === "variations" && order?.variationId ? (
+                  <td style={{ textAlign: "end" }}>
+                    {" "}
+                    $
+                    {(
+                      (order?.product?.variations?.[0]?.sell_price || 0) *
+                      order.quantity
+                    ).toFixed(2)}
+                  </td>
+                ) : (
+                  <td style={{ textAlign: "end" }}>
+                    $
+                    {(order?.product?.size === "slider" ||
+                    order?.size === "slider"
+                      ? (order?.product?.sell_price ||
+                          order?.price?.toFixed(2)) *
+                        order.quantity *
+                        order?.weight
+                      : (order?.product?.sell_price ||
+                          order?.price?.toFixed(2)) * order.quantity
+                    ).toFixed(2)}
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
@@ -278,7 +293,7 @@ export default function ViewButtonModal({ viewButtonOrder, onClose }) {
             <p>SUB TOTAL : ${viewButtonOrder.sub_total.toFixed(2)}</p>
 
             {viewButtonOrder.discount !== 0 &&
-              viewButtonOrder.status !== "HOLD" ? (
+            viewButtonOrder.status !== "HOLD" ? (
               <p>DISCOUNT : ${viewButtonOrder.discount.toFixed(2)}</p>
             ) : null}
             {viewButtonOrder.delivery_charge !== 0 && (
@@ -290,7 +305,7 @@ export default function ViewButtonModal({ viewButtonOrder, onClose }) {
               <p>SURCHARGE : 1.5 %</p>
             ) : null*/}
             {viewButtonOrder.status !== "HOLD" && (
-              <p>AMOUNT PAID : ${adjustedGrandTotal}</p>
+              <p>AMOUNT PAID : ${viewButtonOrder.grand_total.toFixed(2)}</p>
             )}
           </div>
         </div>

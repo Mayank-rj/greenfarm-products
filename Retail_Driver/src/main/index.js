@@ -357,7 +357,7 @@ const printingMethod = async (data) => {
       : parseFloat(item.price) * parseFloat(item.quantity);
 
     const itemLine = item.size === "slider"
-      ? `${item.quantity}x ${item.name} "$${parseFloat(item.price).toFixed(2)}/kg x ${item.weight}kg"`
+      ? `${item.quantity}x ${item.name} \n\t"$${parseFloat(item.price).toFixed(2)}/kg x ${item.weight}kg"`
       : `${item.quantity}x ${item.name}`;
 
     printer.leftRight(`${itemLine}`, `$${itemTotal.toFixed(2)}`)
@@ -396,12 +396,12 @@ const printingMethod = async (data) => {
   }
   printer.alignCenter()
   printer.drawLine()
-  if (data.status.toUpperCase() === "PAID") {
+  if (data?.status.toUpperCase() === "PAID") {
     printer.println(`PAYMENT MODE '${data.payment_mode.toUpperCase()}'`)
   }
-  // if (data.status.toUpperCase() === "HOLD") {
-  //   printer.println(`'HOLD ORDER'`)
-  // }
+  if (data?.status.toUpperCase() === "HOLD") {
+    printer.println(`'HOLD ORDER'`)
+  }
 
   printer.drawLine()
   // printer.println("Support the local business by following and");
@@ -458,6 +458,8 @@ const webprintingMethod = async (data) => {
   printer.newLine()
   printer.println(`Date : ${formatDate(new Date(data.date_time))}\n`)
   printer.newLine()
+  printer.println(`Pick Up Date : ${formatDate(new Date(data.pickup_date))}\n`)
+  printer.newLine()
   printer.println("T/By:Web")
   printer.drawLine()
   printer.newLine()
@@ -477,10 +479,6 @@ const webprintingMethod = async (data) => {
   printer.newLine()
   printer.println(`Notes: ${data.notes}`)
   printer.drawLine()
-
-
-
-
 
 
 

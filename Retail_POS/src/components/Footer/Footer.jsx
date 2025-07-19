@@ -100,9 +100,9 @@ const Footer = () => {
 
       disabled: false,
       action: () => {
-        // setOpenModal(true);
-        // setModalContent(<DrawerPin handleClose={handleClose} />);
-        sendMessage({ command: "open-drawer" });
+        setOpenModal(true);
+        setModalContent(<DrawerPin handleClose={handleClose} />);
+        // sendMessage({ command: "open-drawer" });
         // if (socket.connected) {
         //   socket.emit("message", {
         //     command: "open-drawer",
@@ -256,34 +256,34 @@ const DrawerPin = ({ handleClose }) => {
   const [search, setSearch] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const posData = useSelector((state) => state.posData);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // console.log(posData.pin);
 
   const correctPin = posData.pin;
   const inputRefs = useRef([]);
 
-  const handlePinChange = (index, value) => {
-    if (value.match(/[0-9]/) || value === "") {
-      const newPin = [...pin];
-      newPin[index] = value;
-      setPin(newPin);
-      setSearch(newPin);
-      console.log(search);
+  // const handlePinChange = (index, value) => {
+  //   if (value.match(/[0-9]/) || value === "") {
+  //     const newPin = [...pin];
+  //     newPin[index] = value;
+  //     setPin(newPin);
+  //     setSearch(newPin);
+  //     // console.log(search);
 
-      // Focus management
-      if (value && index < pin.length - 1) {
-        inputRefs.current[index + 1].focus();
-      } else if (!value && index > 0) {
-        inputRefs.current[index - 1].focus();
-      }
+  //     // Focus management
+  //     if (value && index < pin.length - 1) {
+  //       inputRefs.current[index + 1].focus();
+  //     } else if (!value && index > 0) {
+  //       inputRefs.current[index - 1].focus();
+  //     }
 
-      // Check if all digits are filled
-      if (newPin.every((digit) => digit !== "")) {
-        handlePinSubmit(newPin); // Automatically submit when all digits are entered
-      }
-    }
-  };
+  //     // Check if all digits are filled
+  //     if (newPin.every((digit) => digit !== "")) {
+  //       handlePinSubmit(newPin); // Automatically submit when all digits are entered
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     const numericOnly = search.replace(/\D/g, "");

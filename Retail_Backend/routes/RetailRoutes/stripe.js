@@ -27,8 +27,8 @@ router.post("/",async(req,res)=>{
         payment_method_types:["card"],
         line_items:lineitems,
         mode:"payment",
-        success_url:"http://www.greenfarmproducts.com.au/success?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url:"http://www.greenfarmproducts.com.au/failed?session_id={CHECKOUT_SESSION_ID}",
+        success_url:"https://www.greenfarmmeatnswhalal.com.au/success?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url:"https://www.greenfarmmeatnswhalal.com.au/failed?session_id={CHECKOUT_SESSION_ID}",
         metadata: {
             orderDetail:JSON.stringify(newOrder._id), 
           },

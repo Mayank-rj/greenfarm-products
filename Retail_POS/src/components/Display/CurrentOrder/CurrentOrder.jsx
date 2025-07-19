@@ -107,8 +107,7 @@ const CurrentOrder = () => {
 
       if (orders) {
         if (
-          Object.keys(viewButtonOrder).length !== 0 &&
-          viewButtonOrder.status === "paid"
+          Object.keys(viewButtonOrder).length !== 0
         ) {
           response = viewButtonOrder;
         }

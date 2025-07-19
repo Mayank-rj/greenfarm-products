@@ -41,6 +41,7 @@ function Cardpayment({
   const [terminalStatus, setTerminalSatus] = useState("");
   const posData = useSelector((state) => state.posData);
   const transactionMessage = localStorage.getItem("transactionMessage");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // const display = useSelector((state) => state.displayOrder.orders);
 
@@ -73,6 +74,7 @@ function Cardpayment({
   }, [msg, transactionMessage]);
 
   const handleClick = async (e) => {
+    setIsSubmitting(true);
     const buttonname = e.target.innerText;
     if (buttonname === "OK") {
       try {
@@ -123,6 +125,8 @@ function Cardpayment({
         }
       } catch (error) {
         toast.error(error);
+      } finally {
+        setIsSubmitting(false);
       }
       // localStorage.setItem("card", "");
     } else if (buttonname === "CANCEL") {
@@ -270,7 +274,7 @@ function Cardpayment({
 
                 <div className="grid grid-cols-2 gap-2 mt-6">
                   <Button
-                    item="OK"
+                    item={isSubmitting ? "processing" : "OK"}
                     style={{
                       backgroundColor: "green",
                     }}
