@@ -84,8 +84,7 @@ const EditBar = () => {
           onClose={handleClose}
         />
       );
-    }
-    else{
+    } else {
       toast.error("Select Atleast One Product.");
     }
   };
@@ -106,8 +105,7 @@ const EditBar = () => {
           onClose={handleClose}
         />
       );
-    }
-    else{
+    } else {
       toast.error("Select Atleast One Order To View.");
     }
   };
@@ -137,7 +135,7 @@ const EditBar = () => {
       const orderPayload = {
         store_id: posData?.store?._id, // Replace with valid store ID
         date_time: new Date(),
-        payment_mode: "cash", // Replace with actual payment mode
+        payment_mode: "-", // Replace with actual payment mode
         order_number: ordernumber,
         product_details: JSON.stringify(displayOrder), // Ensure `displayOrder` exists
         address: "123, Street Name, City, Country",
@@ -201,31 +199,33 @@ const EditBar = () => {
         toast.error("No products found in the current order.");
         return;
       }
-      setOpenModal(true);
-      setWidth({ width: "40%" });
-      setModalContent(
-        <ConfirmationModal
-          message="Do you really want to Hold your current order?"
-          onConfirm={() => {
-            holdOrder();
-            handleClose();
-          }}
-          onClose={handleClose}
-        />
-      );
+      holdOrder();
+      // setOpenModal(true);
+      // setWidth({ width: "40%" });
+      // setModalContent(
+      //   <ConfirmationModal
+      //     message="Do you really want to Hold your current order?"
+      //     onConfirm={() => {
+      //       holdOrder();
+      //       handleClose();
+      //     }}
+      //     onClose={handleClose}
+      //   />
+      // );
     } else {
-      setOpenModal(true);
-      setWidth({ width: "40%" });
-      setModalContent(
-        <ConfirmationModal
-          message="Do you really want to Unhold your Hold order?"
-          onConfirm={() => {
-            unHoldOrder();
-            handleClose();
-          }}
-          onClose={handleClose}
-        />
-      );
+      unHoldOrder();
+      // setOpenModal(true);
+      // setWidth({ width: "40%" });
+      // setModalContent(
+      //   <ConfirmationModal
+      //     message="Do you really want to Unhold your Hold order?"
+      //     onConfirm={() => {
+      //       unHoldOrder();
+      //       handleClose();
+      //     }}
+      //     onClose={handleClose}
+      //   />
+      // );
     }
   };
 

@@ -300,29 +300,23 @@ const PayModal = ({ onClose }) => {
     // const payValue = buttonValueMap[buttonName];
     if (buttonName === "Exact Amount") {
       const exact = Number(discountAmount);
-      setPayValue(exact);
       setInputFocus(true);
-      setInput((prev) => ({ ...prev, pay: exact.toFixed(2) }));
+      setInput({ pay: exact.toFixed(2) });
     } else if (buttonValueMap[buttonName] !== undefined) {
-      setPayValue((prev) => {
-        const updated = prev + buttonValueMap[buttonName];
-        setInputFocus(true);
-        setInput((prevInput) => ({
-          ...prevInput,
-          pay: updated.toFixed(2),
-        }));
-        return updated;
-      });
+      const currentValue = parseFloat(input.pay) || 0;
+      const updated = currentValue + buttonValueMap[buttonName];
+      setInputFocus(true);
+      setInput((prevInput) => ({
+        ...prevInput,
+        pay: updated.toFixed(2),
+      }));
     }
 
     let cardamount = (
       disAmount +
       (posData.surcharge / 100) * disAmount
     ).toFixed(2);
-    const inp =
-      buttonName === "ACCEPT CASH"
-        ? Number(input.pay || payValue)
-        : Number(input.pay);
+    const inp = Number(input.pay);
     // setchangeamount((input.pay - Amount).toFixed(2));
     // if (payValue !== undefined) {
     //       setInputFocus(true);
@@ -416,7 +410,7 @@ const PayModal = ({ onClose }) => {
         />
       );
     } else if (buttonName === "HOLD") {
-      await sendOrderDetails("cash", "HOLD");
+      await sendOrderDetails("-", "HOLD");
     } else if (buttonName === "CANCEL") {
       onClose();
     }

@@ -42,7 +42,9 @@ const Order = () => {
 
     try {
       const response = await getOrderByUserid(id);
-      setUserinfo(response.data);
+      const completedOrders = response.data.filter(order => order.payment_status === "completed");
+      // console.log(completedOrders)
+      setUserinfo(completedOrders);
     } catch (error) {
       // console.log(error)//
       console.log(error.response.data.message);

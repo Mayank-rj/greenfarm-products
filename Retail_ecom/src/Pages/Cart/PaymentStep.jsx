@@ -268,6 +268,7 @@ const PaymentStep = ({
 
 
 console.log(cartItems);
+console.log(orderDetail)
 
 
 const makepayment = async () => {

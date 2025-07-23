@@ -360,7 +360,15 @@ const printingMethod = async (data) => {
       ? `${item.quantity}x ${item.name} \n\t"$${parseFloat(item.price).toFixed(2)}/kg x ${item.weight}kg"`
       : `${item.quantity}x ${item.name}`;
 
-    printer.leftRight(`${itemLine}`, `$${itemTotal.toFixed(2)}`)
+
+    if (item.size === "slider") {
+      printer.leftRight(`${item.quantity}x ${item.name}`, `$${itemTotal.toFixed(2)}`)
+      // printer.println("")
+      // printer.newLine()
+      printer.println(`    "$${parseFloat(item.price).toFixed(2)}/kg x ${item.weight}kg"`)
+    } else {
+      printer.leftRight(`${item.quantity}x ${item.name}`, `$${itemTotal.toFixed(2)}`)
+    }
 
     console.log(`${itemLine}`, `$${itemTotal.toFixed(2)}`)
 
@@ -431,8 +439,7 @@ const webprintingMethod = async (data) => {
   console.log(`tcp://${device.printer_ip}:${device.printer_port}`)
   const printer = new ThermalPrinter({
     type: PrinterTypes.EPSON,
-    interface: `tcp://${device.printer_ip}:${device.printer_port}`,
-    encoding: 'utf8'
+    interface: `tcp://${device.printer_ip}:${device.printer_port}`
   })
 
   printer.alignCenter()
@@ -458,8 +465,10 @@ const webprintingMethod = async (data) => {
   printer.newLine()
   printer.println(`Date : ${formatDate(new Date(data.date_time))}\n`)
   printer.newLine()
-  printer.println(`Pick Up Date : ${formatDate(new Date(data.pickup_date))}\n`)
-  printer.newLine()
+  if (data?.pickup_date) {
+    printer.println(`Pick Up Date : ${new Date(data.pickup_date).toLocaleDateString("en-GB")}`)
+    printer.newLine()
+  }
   printer.println("T/By:Web")
   printer.drawLine()
   printer.newLine()
@@ -490,14 +499,39 @@ const webprintingMethod = async (data) => {
   printer.bold(false)
   printer.drawLine()
   JSON.parse(data.product_details)?.map((item) => {
-    printer.leftRight(
-      `${item.product.name} x${item.quantity}`,
-      `$${(parseFloat(item.price) * parseFloat(item.quantity)).toFixed(2)}`
-    )
-    console.log(
-      `${item.product.name} x${item.quantity}`,
-      `$${(parseFloat(item.price) * parseFloat(item.quantity)).toFixed(2)}`
-    )
+    const itemTotal = item.size === "slider"
+      ? parseFloat(item.price) * parseFloat(item.quantity) * parseFloat(item.weight)
+      : parseFloat(item.price) * parseFloat(item.quantity);
+
+    const itemLine = item.size === "slider"
+      ? `${item.quantity}x ${item.product.name}"$${parseFloat(item.price).toFixed(2)}/kg x ${item.weight}kg"`
+      : `${item.quantity}x ${item.product.name}`;
+
+    console.log("Product ITem, ",item)
+
+    if (item.product.size === "slider") {
+      console.log(
+        `${item.product.name} x${item.quantity}`,
+        `$${(parseFloat(item.product.sell_price) * parseFloat(item.quantity)).toFixed(2)} 
+        "$${parseFloat(item.price).toFixed(2)}/kg x ${item.weight}kg"`
+      )
+
+      printer.leftRight(`${item.quantity}x ${item.product.name}`, `$${itemTotal.toFixed(2)}`)
+      printer.println(`    "$${parseFloat(item.product.sell_price).toFixed(2)}/kg x ${item.weight}kg"`)
+    } else {
+      console.log(
+        `${item.product.name} x${item.quantity}`,
+        `$${(parseFloat(item.product.sell_price) * parseFloat(item.quantity)).toFixed(2)}`
+      )
+
+      printer.leftRight(`${item.quantity}x ${item.product.name}`, `$${itemTotal.toFixed(2)}`)
+    }
+
+
+    // printer.leftRight(
+    //   `${item.product.name} x${item.quantity}`,
+    //   `$${(parseFloat(item.price) * parseFloat(item.quantity)).toFixed(2)}`
+    // )
 
     // item.variations.map(varItem => {
     //   printer.leftRight(`  -${varItem.name}`, `$${(parseFloat(varItem.sell_price)).toFixed(2)}`);
@@ -511,7 +545,7 @@ const webprintingMethod = async (data) => {
     printer.leftRight('Discount', `$${data.discount.toFixed(2)}`)
   }
   if (data.delivery_charge !== 0) {
-    printer.leftRight('Delivery Charge', `${data.delivery_charge}`)
+    printer.leftRight('Delivery Charge', `$${data.delivery_charge}`)
   }
 
   // printer.println(`GST`);

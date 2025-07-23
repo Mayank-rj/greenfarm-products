@@ -162,8 +162,9 @@ const Footer = () => {
       // console.log("hello");
 
       const date = new Date();
-      const start_date = new Date(date.setHours(0, 0, 0, 0)).toISOString();
       const end_date = new Date(date.setHours(23, 59, 59, 999)).toISOString();
+      date.setDate(date.getDate() - 7);
+      const start_date = new Date(date.setHours(0, 0, 0, 0)).toISOString();
 
       try {
         const response = await webOrderCount(
@@ -171,7 +172,6 @@ const Footer = () => {
           end_date,
           posData?.store?._id
         );
-
         setCurrentWebOrderCount(response);
       } catch (err) {
         console.error(err.message);

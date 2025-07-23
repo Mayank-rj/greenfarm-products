@@ -71,6 +71,7 @@ const getOrderCount = async (req, res) => {
     const totalOrders = await order.countDocuments({
       store_id: store,
       order_type: "online",
+      payment_status: "completed",
       date_time: {
         $gte: startDate,
         $lte: endDate,
