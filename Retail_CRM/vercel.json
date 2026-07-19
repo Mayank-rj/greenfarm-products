@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/retailcrm/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
