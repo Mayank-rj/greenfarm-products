@@ -1,4 +1,4 @@
-import "./CardPayment.css";
+import "./cardpayment.css";
 import Button from "../../../Button/Button";
 import { eftposBgBtn } from "../../../../assets/btn-bg";
 import { useDispatch, useSelector } from "react-redux";
