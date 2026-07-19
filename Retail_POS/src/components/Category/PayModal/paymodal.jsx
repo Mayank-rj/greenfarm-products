@@ -5,7 +5,7 @@ import Modal from "../../Modal/Modal";
 import Numpad from "../../KeyBoard/Numpad/Numpad";
 import { payBgBtn } from "../../../assets/btn-bg";
 import Button from "../../Button/Button";
-import CashReceived from "./CashReceived/CashReceived";
+import CashReceived from "./CashReceived/cashReceived";
 import PayDiscount from "./Discount/Discount";
 import { toast } from "react-toastify";
 import { addOrder } from "../../../api/addOder";
