@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./OrderHistory.css";
+import "./Orderhistory.css";
 import { fetchOrders } from "../../../api/fetchOrders";
 import { useSelector, useDispatch } from "react-redux";
 import { clearViewOrder, showViewOrder } from "../../../feature/viewOrderSlice";
