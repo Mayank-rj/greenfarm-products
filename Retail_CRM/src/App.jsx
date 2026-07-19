@@ -38,7 +38,7 @@ import CouponsTable from './pages/coupons/CouponsTable';
 import CouponManage from './pages/coupons/CouponsManage';
 import PolicyPagesTable from './pages/policypages/PolicyPagesTable';
 import PolicyPageManage from './pages/policypages/PolicyPageManage';
-import ManageSubMenu from './pages/managesubmenu/MAnageSubMenu';
+import ManageSubMenu from './pages/managesubmenu/ManageSubMenu';
 
 function App() {
   
