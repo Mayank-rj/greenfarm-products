@@ -13,7 +13,7 @@ import OpenKg from "./OpenKg/OpenKg";
 import WeightDisplay from "./WeightDisplay/WeightDisplay";
 import { addOrder } from "../../api/addOder";
 import { toast } from "react-toastify";
-import PayModal from "./Paymodal/paymodal";
+import PayModal from "./PayModal/paymodal";
 import { setTransactionState } from "../../feature/transactionSlice";
 import { spi } from "../../pages/Setting/PairingUI";
 import { sharedState } from "../../SPI/event";
