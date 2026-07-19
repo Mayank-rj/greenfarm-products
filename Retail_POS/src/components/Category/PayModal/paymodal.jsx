@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { addOrder } from "../../../api/addOder";
 import { clearOrder } from "../../../feature/displayOrderSlice";
 import SplitPayment from "./SplitPayment/splitpayment";
-import Eftpos from "./Eftpos/Eftpos";
+import Eftpos from "./Eftpos/eftpos";
 import { sendMessage, socket } from "../../../app/driverConnection";
 import { terminalStatus } from "../../../SPI/event";
 const PayModal = ({ onClose }) => {
