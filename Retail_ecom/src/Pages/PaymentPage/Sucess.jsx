@@ -1,116 +1,123 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { orderPaymentStatus } from '../../api/orderPaymentStatus';
-import { useDispatch, useSelector } from 'react-redux';
-import { emptyCart } from '../../slices/cart/cartActions';
-import { fetchSessionId } from '../../api/fetchSessionId';
-import { toast } from 'react-toastify';
-import { userEmail } from '../../assets/userEmail';
-import { sendEmail } from '../../api/sendemail';
-import { adminEmail } from '../../assets/adminEmail';
-import { fetchUserById } from '../../api/fetchUserById';
-import { getStoreById } from '../../api/getStoreById';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { orderPaymentStatus } from "../../api/orderPaymentStatus";
+import { useDispatch, useSelector } from "react-redux";
+import { emptyCart } from "../../slices/cart/cartActions";
+import { fetchSessionId } from "../../api/fetchSessionId";
+import { toast } from "react-toastify";
+import { userEmail } from "../../assets/userEmail";
+import { sendEmail } from "../../api/sendemail";
+import { adminEmail } from "../../assets/adminEmail";
+import { fetchUserById } from "../../api/fetchUserById";
+import { getStoreById } from "../../api/getStoreById";
 
 const Success = () => {
   const navigate = useNavigate();
   // const storeSliceData = useSelector((state) => state.storeData);
   const user = localStorage.getItem("User") || "";
   const storeSliceData = localStorage.getItem("localStoreId") || "";
-   const [userprofile, setUserprofile] = useState("");
-   const [prevent,setPrevent]=useState("")
-   const[storeData,setStoreData]=useState("")
-  const [orderId, setOrderId] = useState(null)
-  const dispatch = useDispatch()
-  const sessionId = new URLSearchParams(window.location.search).get("session_id");
+  const [userprofile, setUserprofile] = useState("");
+  const [prevent, setPrevent] = useState("");
+  const [storeData, setStoreData] = useState("");
+  const [orderId, setOrderId] = useState(null);
+  const dispatch = useDispatch();
+  const sessionId = new URLSearchParams(window.location.search).get(
+    "session_id"
+  );
+
   const fetchOrderDetail = async () => {
     try {
-      const response = await fetchSessionId(sessionId)
+      const response = await fetchSessionId(sessionId);
+      if (!response || !response.data || !response.data.session) {
+        throw new Error("Invalid session response");
+      }
       // console.log(response);
-      const orderDetailString = response.data.session.metadata.orderDetail; 
+      const orderDetailString = response.data.session.metadata.orderDetail;
       // console.log(JSON.parse(orderDetailString));
+
+      if (!JSON.parse(orderDetailString)) {
+        throw new Error("Invalid order details in session metadata");
+      }
+
       setOrderId(JSON.parse(orderDetailString));
-
     } catch (error) {
-      console.error(error)
+      console.error("Invalid session ID or session not found:", error);
+      navigate("/home");
     }
-  }
+  };
 
-   const getSingleUserdetail = async () => {
-      try {
-        const response = await fetchUserById(user);
-        // console.log(response);
-  
-        setUserprofile(response.data);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-  
-    useEffect(() => {
-      getSingleUserdetail()
-    }, [])
-    
+  const getSingleUserdetail = async () => {
+    try {
+      const response = await fetchUserById(user);
+      // console.log(response);
 
-    const getStore= async ()=>{
-      try {
-        const response = await getStoreById(storeSliceData)
-        setStoreData(response)
-      } catch (error) {
-        console.error(error)
-      }
-     
+      setUserprofile(response.data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
     }
+  };
+
+  useEffect(() => {
+    getSingleUserdetail();
+  }, []);
+
+  const getStore = async () => {
+    try {
+      const response = await getStoreById(storeSliceData);
+      setStoreData(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const orderStatus = async () => {
     try {
-      const response = await orderPaymentStatus(orderId, "completed")
+      const response = await orderPaymentStatus(orderId, "completed");
       // console.log(response.data);
       // setOrderDetail(response.data)
-      setPrevent(response.data.payment_status)
-      
+      setPrevent(response.data.payment_status);
+
       if (response.success) {
         console.log(storeSliceData);
         toast.success("Order Placed Successfully");
         dispatch(emptyCart(storeSliceData, user));
 
         const useremailData = userEmail(response.data, userprofile, storeData);
-     
+
         if (useremailData) {
           const data = await sendEmail(useremailData);
           console.log("mail sent user");
         } else {
           toast.error("Email data is invalid. Email not sent.");
         }
-  
-        const adminEmailData = adminEmail(response.data, userprofile, storeData);
-  
+
+        const adminEmailData = adminEmail(
+          response.data,
+          userprofile,
+          storeData
+        );
+
         if (adminEmailData) {
           const data = await sendEmail(adminEmailData);
           console.log("mail sent");
-          
         } else {
           toast.error("Admin email data is invalid. Email not sent.");
         }
-  
       }
-
-       
-
-
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   console.log(prevent);
   useEffect(() => {
-    fetchOrderDetail()
-    getStore()
-  }, [])
+    fetchOrderDetail();
+    getStore();
+  }, [sessionId]);
 
-  useEffect(()=>{
-    if(orderId && prevent !=="completed") orderStatus()
-  },[orderId])
+  useEffect(() => {
+    if (orderId && prevent !== "completed") orderStatus();
+  }, [orderId]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4 py-6">
@@ -144,13 +151,10 @@ const Success = () => {
 
         <div
           className="bg-blue-50 p-3 md:p-4 rounded-md mb-4 md:mb-6 cursor-pointer"
-          onClick={() => navigate('/')}
+          onClick={() => navigate("/")}
         >
-          <p className="text-xs md:text-sm text-blue-600">
-            Continue Shopping
-          </p>
+          <p className="text-xs md:text-sm text-blue-600">Continue Shopping</p>
         </div>
-
       </div>
     </div>
   );

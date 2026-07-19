@@ -95,7 +95,7 @@ const Profile = () => {
       mobile: Yup.string()
         .required("Mobile number is required")
         .matches(/^\d+$/, "Mobile number must contain only digits")
-        .min(10, "Mobile number must be at least 10 digits")
+        .min(9, "Mobile number must be at least 10 digits")
         .max(15, "Mobile number cannot exceed 15 digits"),
     }),
     onSubmit: async (values) => {

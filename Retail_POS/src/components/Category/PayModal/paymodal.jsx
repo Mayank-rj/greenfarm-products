@@ -53,24 +53,20 @@ const PayModal = ({ onClose }) => {
   const unique_id = useSelector((state) => state.footer.uniqueId);
   const Amount = (Math.round(totalRoundOff * 20) / 20).toFixed(2);
   const discountAmount = (Math.round(disAmount * 20) / 20).toFixed(2);
- 
-  
-  // console.log("discountAmount", discountAmount);
+
+  // console.log("displayOrder", displayOrder);
   // console.log("disAmount", disAmount);
-
-
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       // setterminalStatus(terminalmsg);
-      terminalStatus
+      terminalStatus;
     }, 500);
 
     return () => clearInterval(intervalId);
   }, [terminalStatus]);
 
   // console.log(terminalStatus);
-  
 
   const storedOrderNumber = holdOrderNumber
     ? holdOrderNumber
@@ -109,7 +105,12 @@ const PayModal = ({ onClose }) => {
     tip_amount: "0",
   };
 
-  const sendOrderDetails = async (payment_mode, status, cardamt, cashamt) => {
+  const sendOrderDetails = async (
+    payment_mode,
+    status,
+    cardamt = 0,
+    cashamt = 0
+  ) => {
     try {
       orderPayload.payment_mode = payment_mode;
       orderPayload.status = status;
@@ -128,15 +129,20 @@ const PayModal = ({ onClose }) => {
         orderPayload.grand_total = orderPayload.sub_total;
       }
       const response = await addOrder(orderPayload);
-
       if (response.success === true) {
         if (status !== "HOLD") {
           toast.success("Order placed successfully!");
-          return response.success
-        }
-        if (!holdOrderNumber) {
+          if (!holdOrderNumber) {
+            localStorage.removeItem("orderNumber");
+            localStorage.removeItem("uniqueId");
+          }
+          return response.success;
+        } else {
           localStorage.removeItem("orderNumber");
           localStorage.removeItem("uniqueId");
+          toast.info("Order status set to HOLD");
+          dispatch(clearOrder());
+          onClose();
         }
       } else {
         // toast.error("Failed to place the order. Please try again.");
@@ -168,7 +174,7 @@ const PayModal = ({ onClose }) => {
       discount: parseFloat(discount),
       order_type: "pos",
       change_amount: inputFocus ? parseFloat(changeAmount) : 0,
-      tender_amount: parseFloat(input.pay)|| 0,
+      tender_amount: parseFloat(input.pay) || 0,
       split_cash_amount: 0,
       split_card_amount: 0,
       reference_id: 0,
@@ -280,7 +286,7 @@ const PayModal = ({ onClose }) => {
     setchangeamount(calculatedChange);
   };
   //
-
+  const [payValue, setPayValue] = useState(0);
   const handleClick = async (e) => {
     const buttonValueMap = {
       "$ 5": 5,
@@ -288,18 +294,35 @@ const PayModal = ({ onClose }) => {
       "$ 20": 20,
       "$ 50": 50,
       "$ 100": 100,
-      "Exact Amount": discountAmount,
+      "Exact Amount": Number(discountAmount),
     };
     const buttonName = e.target.innerText;
-    const payValue = buttonValueMap[buttonName];
-    let cardamount = (disAmount + ((posData.surcharge/100) * disAmount)).toFixed(2);
+    // const payValue = buttonValueMap[buttonName];
+    if (buttonName === "Exact Amount") {
+      const exact = Number(discountAmount);
+      setInputFocus(true);
+      setInput({ pay: exact.toFixed(2) });
+    } else if (buttonValueMap[buttonName] !== undefined) {
+      const currentValue = parseFloat(input.pay) || 0;
+      const updated = currentValue + buttonValueMap[buttonName];
+      setInputFocus(true);
+      setInput((prevInput) => ({
+        ...prevInput,
+        pay: updated.toFixed(2),
+      }));
+    }
+
+    let cardamount = (
+      disAmount +
+      (posData.surcharge / 100) * disAmount
+    ).toFixed(2);
     const inp = Number(input.pay);
     // setchangeamount((input.pay - Amount).toFixed(2));
- 
-    if (payValue !== undefined) {
-      setInputFocus(true);
-      setInput({ ...input, pay: payValue });
-    } else if (buttonName === "ACCEPT CASH") {
+    // if (payValue !== undefined) {
+    //       setInputFocus(true);
+    //       setInput({ ...input, pay: payValue });
+    //     } else
+    if (buttonName === "ACCEPT CASH") {
       if (inp === "" || inp === 0 || inp < discountAmount || Amount === 0) {
         setOpenModal(!openModal);
         setWidth({ width: "50%" });
@@ -316,7 +339,10 @@ const PayModal = ({ onClose }) => {
         setOpenModal(!openModal);
         setWidth({ width: "50%" });
         // console.log(changeAmount);
-
+        //open drawer on click accept cash
+        sendMessage({
+          command: "open-drawer",
+        });
         setModalContent(
           <CashReceived
             sendOrderDetails={sendOrderDetails}
@@ -329,41 +355,36 @@ const PayModal = ({ onClose }) => {
         );
       }
     } else if (buttonName == "EFTPOS") {
-      if (cardamount >= 1 && terminalStatus === "PairedConnected" && cardamount <= 10000) {
+      if (
+        cardamount >= 1 &&
+        terminalStatus === "PairedConnected" &&
+        cardamount <= 10000
+      ) {
         // console.log(cardamount);
-      setOpenModal(!openModal);
-      setWidth({ width: "40%" });
-      setModalContent(
-        <Eftpos
-          cardamount={cardamount}
-          cashamount={0}
-          onClose={onClose}
-          sendOrderDetails={sendOrderDetails}
-          payment_mode={"eftpos"}
-          setDataToShow={setDataToShow}
-          handlePrint={handlePrint}
-          printData={printData}
-        />
-      );
-    }
-    else if (cardamount < 1) {
-      toast.error("Amount should be greater than $ 1")
-    }
-    else if(cardamount >= 10000){
-      console.log(cardamount);
-      
-      toast.error("Amount should be less than $ 10000")
-    }
-    else if (terminalStatus !=="PairedConnected") {
-      toast.error("Please Connect the terminal first")
-    }
-  
-  }
+        setOpenModal(!openModal);
+        setWidth({ width: "40%" });
+        setModalContent(
+          <Eftpos
+            cardamount={cardamount}
+            cashamount={0}
+            onClose={onClose}
+            sendOrderDetails={sendOrderDetails}
+            payment_mode={"eftpos"}
+            setDataToShow={setDataToShow}
+            handlePrint={handlePrint}
+            printData={printData}
+          />
+        );
+      } else if (cardamount < 1) {
+        toast.error("Amount should be greater than $ 1");
+      } else if (cardamount >= 10000) {
+        console.log(cardamount);
 
-
-  
-
-    else if (buttonName == "SPLIT PAYMENT") {
+        toast.error("Amount should be less than $ 10000");
+      } else if (terminalStatus !== "PairedConnected") {
+        toast.error("Please Connect the terminal first");
+      }
+    } else if (buttonName == "SPLIT PAYMENT") {
       setOpenModal(!openModal);
       setWidth({ width: "40%" });
       setModalContent(
@@ -389,10 +410,7 @@ const PayModal = ({ onClose }) => {
         />
       );
     } else if (buttonName === "HOLD") {
-      await sendOrderDetails("cash", "HOLD");
-      toast.info("Order status set to HOLD");
-      dispatch(clearOrder());
-      onClose();
+      await sendOrderDetails("-", "HOLD");
     } else if (buttonName === "CANCEL") {
       onClose();
     }

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Driver application for the Green farm Retail POS",
   "main": "./out/main/index.js",
-  "author": "kodeklan.com",
-  "homepage": "https://kodeklan.com",
+  "author": "Greenfarm Products",
+  "homepage": "https://www.greenfarmmeatnswhalal.com.au/",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",

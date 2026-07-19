@@ -55,6 +55,7 @@ const WebOrderHistory = ({ search, setSearch }) => {
           // console.log(index++);
           // Ensure order is of type "online"
           const isOnlineOrder = order.order_type === "online";
+          const paymentStatus = order.payment_status === "completed";
 
           // Check if pickup or delivery date is valid (i.e., not in the past)
           const isValidPickupDate = order?.pickup_date
@@ -72,11 +73,11 @@ const WebOrderHistory = ({ search, setSearch }) => {
           // console.log("isValidPickupDate", isValidPickupDate);
           // console.log("isValidDeliveryDate", isValidDeliveryDate);
           const isValidOrderDate = isValidPickupDate || isValidDeliveryDate;
-          const isValidOrder = !(
-            isValidOrderDate === false && order.isPrinted === true
-          );
+          // const isValidOrder = !(
+          //   isValidOrderDate === false && order.isPrinted === true
+          // );
           // console.log(isValidOrder);
-          return isOnlineOrder && isValidOrder;
+          return isOnlineOrder && isValidOrderDate && paymentStatus;
         });
 
         // console.log(filteredOrders);

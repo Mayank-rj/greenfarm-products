@@ -3,18 +3,16 @@ import SITE_CONFIG from "../../controller";
 import { getStoreById } from "../api/getStoreById";
 
 export const userEmail = (orderDetail, userprofile, store) => {
-
+  console.log("Order Details", orderDetail)
   if (!orderDetail) {
     console.error("Order details are missing");
     return;
   }
 
-  console.log(userprofile);
-
-
   return {
-    // to: `${userprofile.email}`,
-    to: `mayank.kumar.rajoria@gmail.com`,
+    to: `${userprofile.email}`,
+    // to: ["mayank.kumar.rajoria@gmail.com",pos.sendemail@gmail.com],
+    cc: ["onlineorder@greenfarmproducts.com.au", "surajjohal1@yahoo.com.au"],
     html: `
         <h1>Order Confirmation</h1>
        <p>Dear Customer (${userprofile.first_name} ${userprofile.last_name}),</p>
@@ -56,10 +54,10 @@ export const userEmail = (orderDetail, userprofile, store) => {
                 </td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${item.quantity
             }</td>
-                <td style="border: 1px solid #ddd; padding: 8px;">$${item.price
-            }</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">$${item.product.sell_price
+            }/${item.product.unit}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">$${(
-              item.price * item.quantity
+              item.price
             ).toFixed(2)}</td>
               </tr>
             `
@@ -70,7 +68,7 @@ export const userEmail = (orderDetail, userprofile, store) => {
         </table>
   
       <h3>${orderDetail.deliverytype === "delivery" ? `<p>Delivery Charge: $${orderDetail.delivery_charge}</p>` : ""}</h3>
-      <h3>Total Amount: $${orderDetail.grand_total}</h3>
+      <h3>Total Amount: $${Number(orderDetail.grand_total).toFixed(2)}</h3>
        <p>Remark: ${orderDetail.notes || "No additional remark"}</p>
         ${orderDetail.deliverytype === "delivery"
         ? `<p>Delivery Address: ${orderDetail.address}</p>`
@@ -91,7 +89,7 @@ export const userEmail = (orderDetail, userprofile, store) => {
               <p><strong>${store?.name}</strong></p>
               <p>${store?.address}</p>
               <p>Contact:${store?.mobile}</p>
-              <p>Website: <a href="https://greenfarmstore.com" target="_blank">greenfarmstore.com</a></p>
+              <p>Website: <a href="https://greenfarmmeatnswhalal.com.au/" target="_blank">www.greenfarmmeatnswhalal.com.au/</a></p>
             </td>
           </tr>
         </table>

@@ -52,11 +52,11 @@ const Category = () => {
       setWidth({ width: "80%" });
       setModalContent(<OpenItem onClose={handleClose} />);
     } else if (buttonName === "SALE BY KG") {
-      if (weight !== 0) {
+      // if (weight !== 0) {
         setOpenModal(!openModal);
         setWidth({ width: "40%" });
         setModalContent(<SaleByKg onClose={handleClose} />);
-      }
+      // }
     } else if (buttonName === "OPEN KG") {
       setOpenModal(!openModal);
       setWidth({ width: "80%" });

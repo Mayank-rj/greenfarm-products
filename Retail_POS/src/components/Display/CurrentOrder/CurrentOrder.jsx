@@ -107,8 +107,7 @@ const CurrentOrder = () => {
 
       if (orders) {
         if (
-          Object.keys(viewButtonOrder).length !== 0 &&
-          viewButtonOrder.status === "paid"
+          Object.keys(viewButtonOrder).length !== 0
         ) {
           response = viewButtonOrder;
         }
@@ -121,13 +120,13 @@ const CurrentOrder = () => {
           response = viewButtonOrder;
         }
       } else {
-        console.log("fetch last order")
+        console.log("fetch last order");
         response = await fetchLatestOrder(
           start_date,
           end_date,
           posData?.store?._id
         );
-        console.log(response)
+        console.log(response);
       }
 
       // const getuser = async () => {
@@ -147,7 +146,7 @@ const CurrentOrder = () => {
 
       if (orders) {
         if (response) {
-          // console.log(response)
+          console.log(response);
           sendMessage({
             command: "print",
             data: response,
@@ -166,16 +165,15 @@ const CurrentOrder = () => {
           const res = updateOrder(payload);
           // console.log(res);
         }
-      }
-      else{
+      } else {
         console.log("hii");
         if (response) {
           sendMessage({
             command: "print",
             data: response,
           });
-      }}
-
+        }
+      }
     } catch (err) {
       toast.error(err.message);
     } finally {

@@ -41,7 +41,7 @@ const ContactPage = () => {
       )
       .required("Email ID is required"),
     contact_no: Yup.string()
-      .min(10, "Mobile number must be at least 10 digits")
+      .min(9, "Mobile number must be at least 10 digits")
       .max(15, "Mobile number must be at most 15 characters")
       .required("Mobile number is required"),
     message: Yup.string().required("Message is required"),

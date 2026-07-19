@@ -52,16 +52,16 @@ const productSchema = new mongoose.Schema({
                 type: Number,
                 required: true,
             },
-            sell_price:{
+            sell_price: {
                 type: Number,
                 required: true,
             },
-            discount:{
+            discount: {
                 type: Number,
                 required: true,
             }
         }],
-        default:[]
+        default: []
     },
     size: {
         type: String,
@@ -88,6 +88,10 @@ const productSchema = new mongoose.Schema({
         type: String,
     },
     quantity: {
+        type: Number,
+        required: true,
+    },
+    pos_price: {
         type: Number,
         required: true,
     },

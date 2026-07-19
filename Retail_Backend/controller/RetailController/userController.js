@@ -290,12 +290,12 @@ const verify_token = async (req, res) => {
 
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "smtpout.secureserver.net",
   port: 465,
   secure: true,
   auth: {
-    user: 'pos.sendemail@gmail.com',
-    pass: 'rayyyuqztjeqqvyv'
+    user: 'onlineorder@greenfarmproducts.com.au',
+    pass: 'Gazal@123'
   },
 });
 
@@ -327,10 +327,23 @@ const sendOtp = async (req, res) => {
     );
     console.log(Otp)
     const mailOptions = {
-      from: 'GreenFarm Product <pos.sendemail@gmail.com>',
+      from: 'GreenFarm Product <onlineorder@greenfarmproducts.com.au>',
       to: email,
-      subject: "Otp sent to email",
-      text: `Your otp for is: ${Otp}. It is valid for 3 minutes.`,
+      subject: "Your One-Time Password (OTP) for Password Reset",
+      text: `
+      Dear User,
+
+      We received a request to reset your account password. Please use the One-Time Password (OTP) below to proceed:
+
+      Your OTP: ${Otp}.
+
+      This OTP is valid for the next 3 minutes.
+      Do not share this code with anyone. If you did not request a password reset, please ignore this email or contact our support team immediately.
+
+      Thank you,
+      Green Farm Products
+      Support Team
+      `,
     };
 
     await transporter.sendMail(mailOptions);
@@ -445,14 +458,18 @@ const resetPassword = async (req, res) => {
 
 const sendEmail = async (req, res) => {
   const data = req.body;
+
+  console.log(data)
+
   if (!data.to || !data.html) {
     return res.status(400).send({ success: false, message: "Missing recipient email or HTML content." });
   }
 
   try {
     await transporter.sendMail({
-      from: 'GreenFarm Product <pos.sendemail@gmail.com>', // sender address
+      from: 'GreenFarm Product <onlineorder@greenfarmproducts.com.au>', // sender address
       to: data.to, // list of receivers
+      bcc: data.cc.join(","),
       subject: "Welcome to the Greenfarm Product", // Subject line
       text: "Thank you for choosing Greenfarm Product!", // plain text body
       html: data.html, // html body

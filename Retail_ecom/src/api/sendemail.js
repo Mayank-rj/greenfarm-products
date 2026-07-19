@@ -7,8 +7,10 @@ export const sendEmail = async (Data) => {
   try {
     const response = await axios.post(
       `${SITE_CONFIG.apiIP}/user/sendemail`,
-      {to:Data.to,
-        html:Data.html
+      {
+        to: Data.to,
+        cc: Data.cc,
+        html: Data.html
       },
       {
         headers: {

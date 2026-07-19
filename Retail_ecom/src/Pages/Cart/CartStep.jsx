@@ -431,6 +431,7 @@ const CartStep = ({
                 <textarea
                   className="w-full p-1 mt-2 border rounded-md focus:outline-none"
                   value={notes}
+                  placeholder="Please mention your delivery date / pickup date here"
                   onChange={(e) => setnotes(e.target.value)}
                 />
               </div>

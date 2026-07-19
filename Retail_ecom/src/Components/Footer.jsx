@@ -283,13 +283,13 @@ const Footer = () => {
               : "flex justify-center items-center "
               }`}
           >
-            <img src={vis_icon} alt="ATM Card 1" className="h-10" />
-            <img
+            <img src="./powered-by-stripe.png" alt="ATM Card 1" className="h-20" />
+            {/* <img
               src={American_Express_icon}
               alt="ATM Card 2"
               className="h-10"
             />
-            <img src={MasterCard_icon} alt="ATM Card 3" className="h-10" />
+            <img src={MasterCard_icon} alt="ATM Card 3" className="h-10" /> */}
           </div>
         </div>
       </footer>

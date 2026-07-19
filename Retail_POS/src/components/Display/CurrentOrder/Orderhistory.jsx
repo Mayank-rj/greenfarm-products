@@ -8,24 +8,29 @@ import { toast } from "react-toastify";
 const OrderHistory = ({ search, setSearch }) => {
   const dispatch = useDispatch();
   const viewButtonOrder = useSelector((state) => state.displayViewOrder.order);
-  const posData=  useSelector(state=>state.posData)
+  const posData = useSelector((state) => state.posData);
   const [orderHistory, setOrderHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const { dltorders } = useSelector((state) => state.footer);
   useEffect(() => {
     const fetchOrderHistory = async () => {
-
       const date = new Date();
       const start_date = new Date(date.setHours(0, 0, 0, 0)).toISOString();
       const end_date = new Date(date.setHours(23, 59, 59, 999)).toISOString();
-      if(!posData?.store?._id){
-        toast.error("Store Data is missing. Please Connect the driver")
-        return
+      if (!posData?.store?._id) {
+        toast.error("Store Data is missing. Please Connect the driver");
+        return;
       }
       try {
         setLoading(true);
-        const response = await fetchOrders(start_date, end_date,posData?.store?._id);
-        const filteredOrders = response.filter(order => order.order_type === "pos");
+        const response = await fetchOrders(
+          start_date,
+          end_date,
+          posData?.store?._id
+        );
+        const filteredOrders = response.filter(
+          (order) => order.order_type === "pos"
+        );
 
         setOrderHistory(filteredOrders);
         // console.log(response);
@@ -35,19 +40,14 @@ const OrderHistory = ({ search, setSearch }) => {
         setLoading(false);
       }
     };
-    
-    fetchOrderHistory();
 
+    fetchOrderHistory();
 
     return () => {
       setSearch("");
       dispatch(clearViewOrder());
-    }
+    };
   }, [dltorders]);
-
-
-
-
 
   const handleCheckboxChange = (order, isChecked) => {
     if (isChecked) {
@@ -57,8 +57,6 @@ const OrderHistory = ({ search, setSearch }) => {
       // setCheckedOrder({});
       dispatch(clearViewOrder());
     }
-
-
   };
 
   const handleRowClick = (order, event) => {
@@ -73,10 +71,7 @@ const OrderHistory = ({ search, setSearch }) => {
     }
   };
 
-
   // console.log(orderHistory);
-  
-
 
   return (
     <div className="order-history-container scrollable">
@@ -104,60 +99,66 @@ const OrderHistory = ({ search, setSearch }) => {
             </tr>
           </thead>
           <tbody>
-            {orderHistory.filter((data) => data.order_number.includes(search)).map((order) => (
-              <tr key={order._id}>
-                <td>
-                  <label>
-                    <input
-                      type="checkbox"
-                      id={order.orderNo}
-                      onChange={(e) =>
-                        handleCheckboxChange(order, e.target.checked)
-                      }
-                      checked={order._id === viewButtonOrder._id}
-                    />
-                    <span style={{ fontWeight: "bold", marginLeft: "5px" }}>
-                      {" "}
-                      {order.order_number}
-                    </span>
-                  </label>
-                </td>
-                <td
-                  style={{ textAlign: "start" }}
-                  onClick={(e) => handleRowClick(order, e)}
-                >
-                  <label
-                    style={{ display: "block", textTransform: "capitalize" }}
+            {orderHistory
+              .filter((data) => data.order_number.includes(search))
+              .map((order) => (
+                <tr key={order._id}>
+                  <td>
+                    <label>
+                      <input
+                        type="checkbox"
+                        id={order.orderNo}
+                        onChange={(e) =>
+                          handleCheckboxChange(order, e.target.checked)
+                        }
+                        checked={order._id === viewButtonOrder._id}
+                      />
+                      <span style={{ fontWeight: "bold", marginLeft: "5px" }}>
+                        {" "}
+                        {order.order_number}
+                      </span>
+                    </label>
+                  </td>
+                  <td
+                    style={{ textAlign: "start" }}
+                    onClick={(e) => handleRowClick(order, e)}
                   >
-                    {"SALE"}
-                  </label>
-                </td>
-                <td onClick={(e) => handleRowClick(order, e)}>
-                  <label
-                    className={`status-label ${order.status.toUpperCase() === "PAID"
-                      ? "status-completed"
-                      : order.status.toUpperCase() === "HOLD"
-                        ? "status-pending"
-                        : "status-cancelled"
+                    <label
+                      style={{ display: "block", textTransform: "capitalize" }}
+                    >
+                      {"SALE"}
+                    </label>
+                  </td>
+                  <td onClick={(e) => handleRowClick(order, e)}>
+                    <label
+                      className={`status-label ${
+                        order.status.toUpperCase() === "PAID"
+                          ? "status-completed"
+                          : order.status.toUpperCase() === "HOLD"
+                          ? "status-pending"
+                          : "status-cancelled"
                       }`}
-                  >
-                    {order.status}
-                  </label>
-                </td>
-                <td onClick={(e) => handleRowClick(order, e)}>
-                  <label
-                    style={{ display: "block", textTransform: "uppercase" }}
-                  >
-                    {order.payment_mode}
-                  </label>
-                </td>
-                <td onClick={(e) => handleRowClick(order, e)}>
-                  <label>${order.payment_mode === "eftpos"
-                    ? ((order.sub_total - order.discount) * 1.015).toFixed(2)
-                    : order.grand_total.toFixed(2)}</label>
-                </td>
-              </tr>
-            ))}
+                    >
+                      {order?.status?.toUpperCase()}
+                    </label>
+                  </td>
+                  <td onClick={(e) => handleRowClick(order, e)}>
+                    <label
+                      style={{ display: "block", textTransform: "uppercase" }}
+                    >
+                      {order.payment_mode}
+                    </label>
+                  </td>
+                  <td onClick={(e) => handleRowClick(order, e)}>
+                    <label>
+                      ${order.grand_total.toFixed(2)}
+                      {/* {order.payment_mode === "eftpos"
+                        ? (order.sub_total - order.discount).toFixed(2)
+                        : order.grand_total.toFixed(2)} */}
+                    </label>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       )}

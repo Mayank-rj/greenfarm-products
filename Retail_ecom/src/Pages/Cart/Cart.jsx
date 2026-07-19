@@ -70,7 +70,7 @@ const Cart = () => {
     setdelivarytype: "",
     isPrinted: false,
     date_time: new Date().toISOString(),
-    payment_status:""
+    payment_status:"pending"
   });
   const [isActive, setIsActive] = useState(true);
   const [deactiveProductName, setDeactiveProductName] = useState("");
