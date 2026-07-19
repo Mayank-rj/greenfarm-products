@@ -1,6 +1,6 @@
 import Modal from '../../../Modal/Modal.jsx'
 import { useEffect, useState } from 'react'
-import './Eftpos.css'
+import './eftpos.css'
 import Button from '../../../Button/Button.jsx'
 import { eftposBgBtn } from '../../../../assets/btn-bg.js'
 import Cardpayment from './cardpayment.jsx'
