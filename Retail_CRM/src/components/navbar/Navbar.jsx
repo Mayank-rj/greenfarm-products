@@ -3,7 +3,7 @@ import { CgProfile } from 'react-icons/cg';
 import { FiLogOut, } from 'react-icons/fi';
 import { NavLink } from 'react-router';
 import { Button, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
-import Logo from '../../assets/images/mainLogo.png';
+import Logo from '../../assets/images/mainlogo.png';
 import './Navbar.css';
 import { useAuth } from '../../utils/context/AuthContext';
 import ConfirmationModal from '../modals/ConfirmationModal';
