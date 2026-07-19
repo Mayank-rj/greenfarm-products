@@ -1,6 +1,6 @@
 // cartActions.js
 import { addCart } from "../../api/addCart";
-import { fetchCart } from "../../api/fetchcart";
+import { fetchCart } from "../../api/fetchCart";
 import {
   FETCH_CART_REQUEST,
   FETCH_CART_SUCCESS,
