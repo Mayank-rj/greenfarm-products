@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ordernumber } from "../../../api/orderNumber";
 import OrderHistory from "./Orderhistory";
 import { orderNumber as holdedOrderNo } from "../../../feature/showorderslice";
-import WebOrderHistory from "./CurrentOrderTable/weborder/weborderhistory";
+import WebOrderHistory from "./CurrentOrderTable/WebOrder/weborderhistory";
 import { toast } from "react-toastify";
 import { fetchLatestOrder } from "../../../api/fetchLatestOrder";
 import { sendMessage, socket } from "../../../app/driverConnection";
