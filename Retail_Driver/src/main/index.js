@@ -44,7 +44,7 @@ async function accessDevice() {
     const macAddress = await fetchMacAddress()
     const response = await axios.post(
       // 'https://retailpos.greenfarmproducts.com.au/api/driver/posconfiguration/getbymac',
-      'http://13.201.57.251/api/driver/posconfiguration/getbymac',
+      'https://greenfarm-products-backend.onrender.com/api/driver/posconfiguration/getbymac',
       { mac_address: macAddress },
       {
         headers: {
