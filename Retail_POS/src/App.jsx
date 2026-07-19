@@ -15,7 +15,7 @@ import { clearPosData, setPosData } from "./feature/posDataSlice";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import Setting from "./pages/Setting/setting";
+import Setting from "./pages/Setting/Setting";
 import About from "./pages/Setting/About";
 import Terminal from "./pages/Setting/Terminal";
 import Transaction from "./pages/Setting/TransactionHistory/Transaction";
