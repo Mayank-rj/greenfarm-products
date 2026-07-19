@@ -50,7 +50,10 @@ async function promptForVersionChange() {
 
 async function main() {
   // Prompt the user for the version change type
-  const { versionType } = await promptForVersionChange();
+  // const { versionType } = await promptForVersionChange();
+
+  // Temporary bypass
+  const versionType = null;
 
   if (!versionType) {
     console.log("No version change made.");
@@ -77,7 +80,7 @@ async function main() {
   // Replace the existing POS_VERSION
   const updatedContent = controllerContent.replace(
     /POS_VERSION: "(\d+\.\d+\.\d+)"/,
-    `POS_VERSION: "${packageJson.version}"`
+    `POS_VERSION: "${packageJson.version}"`,
   );
 
   // Write the updated controller.js back
