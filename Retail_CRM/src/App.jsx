@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import BottomNavbar from './components/navbar/BottomNavbar';
 import Dashboard from './pages/dashboard/Dashboard';
 import SideMenu from './components/sidemenu/SideMenu';
-import Layout from './layout/LAyout';
+import Layout from './layout/Layout';
 import { Box } from '@mui/material';
 import ProductsTable from './pages/products/ProductsTable';
 import ProductManage from './pages/products/ProductManage';
