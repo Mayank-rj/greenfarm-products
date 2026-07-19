@@ -4,7 +4,7 @@ import Modal from '../../../Modal/Modal'
 import Button from '../../../Button/Button'
 import Numpad from '../../../KeyBoard/Numpad/Numpad'
 import { splitPayBgBtn } from '../../../../assets/btn-bg'
-import Eftpos from '../Eftpos/Eftpos'
+import Eftpos from '../Eftpos/eftpos'
 import { toast } from 'react-toastify'
 import { terminalStatus } from '../../../../SPI/event'
 export default function SplitPayment({ onClose, amount, sendOrderDetails, payment_mode, setDataToShow, handlePrint, printData }) {
