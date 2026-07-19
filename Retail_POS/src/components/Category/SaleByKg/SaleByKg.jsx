@@ -30,8 +30,8 @@ export const SaleByKg = ({ onClose }) => {
         dispatch(
           showOrder({
             name: "Sale By Kg",
-            weight:2,
-            // weight,
+            // weight:2,
+            weight,
             price: Number(input.salebykg),
             size: "slider",
             uniqueId: uuidv4(),

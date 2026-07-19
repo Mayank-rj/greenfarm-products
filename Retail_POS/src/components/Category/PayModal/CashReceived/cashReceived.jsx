@@ -6,6 +6,7 @@ import { clearOrder } from "../../../../feature/displayOrderSlice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { sendMessage } from "../../../../app/driverConnection";
+import { FaSpinner } from "react-icons/fa";
 
 export default function CashReceived({
   handlePrint,
@@ -45,7 +46,13 @@ export default function CashReceived({
         <h3 className="output-box">${changeAmount}</h3>
         <div className="btn-box">
           <Button
-            item={isSubmitting ? "Processing" : "OK"}
+            item={
+              isSubmitting ? (
+                <FaSpinner className="animate-spin text-4xl text-slate-200" />
+              ) : (
+                "OK"
+              )
+            }
             handleClick={handleClick}
             style={{ backgroundColor: "blue" }}
             background={changeBgBtn[0]}

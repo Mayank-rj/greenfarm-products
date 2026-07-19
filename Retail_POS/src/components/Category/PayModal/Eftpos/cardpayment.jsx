@@ -1,6 +1,6 @@
 import "./CardPayment.css";
 import Button from "../../../Button/Button";
-import { eftposBgBtn } from "../../../../assets/btn-bg";
+import { displayBgBtn, eftposBgBtn } from "../../../../assets/btn-bg";
 import { useDispatch, useSelector } from "react-redux";
 import { clearOrder } from "../../../../feature/displayOrderSlice";
 import {
@@ -10,20 +10,21 @@ import {
   recoverTransaction,
   sharedState,
 } from "../../../../SPI/event";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { setTransactionState } from "../../../../feature/transactionSlice";
 import {
   cancelTransaction,
   purchase,
   reference_id,
 } from "../../../../SPI/transaction";
-import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import { FaCheckCircle, FaSpinner, FaTimesCircle } from "react-icons/fa";
 import { PiWarningCircle } from "react-icons/pi";
 import { addtransaction } from "../../../../api/addTransaction";
 import { toast } from "react-toastify";
 import { spi } from "../../../../pages/Setting/PairingUI";
 import { sendMessage } from "../../../../app/driverConnection";
 import { SuccessState } from "@mx51/spi-client-js";
+import { debounce } from "lodash";
 function Cardpayment({
   handleClose,
   onClose,
@@ -41,7 +42,6 @@ function Cardpayment({
   const [terminalStatus, setTerminalSatus] = useState("");
   const posData = useSelector((state) => state.posData);
   const transactionMessage = localStorage.getItem("transactionMessage");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // const display = useSelector((state) => state.displayOrder.orders);
 
@@ -73,63 +73,79 @@ function Cardpayment({
     return () => clearInterval(intervalId);
   }, [msg, transactionMessage]);
 
+  // const handleCloseButton = () => {
+  //   dispatch(clearOrder());
+  //   dispatch(setTransactionState(false));
+
+  //   localStorage.removeItem("orderNumber");
+  //   localStorage.removeItem("uniqueId");
+  //   localStorage.removeItem("lastTxPosId");
+  //   localStorage.removeItem("order_id");
+  //   localStorage.removeItem("transactionMessage");
+  //   localStorage.removeItem("merchant_receipt");
+  //   localStorage.removeItem("customer_receipt");
+  //   localStorage.removeItem("eventMessage");
+  //   localStorage.removeItem("errorDetail");
+  //   localStorage.removeItem("hostResponseText");
+  //   localStorage.removeItem("discountAmount");
+  //   localStorage.removeItem("customer_receipt");
+  //   onClose();
+  // };
+
   const handleClick = async (e) => {
-    setIsSubmitting(true);
     const buttonname = e.target.innerText;
-    if (buttonname === "OK") {
-      try {
-        if (payment_mode === "eftpos") {
-          await sendOrderDetails(payment_mode, "paid", cardamount, 0);
-        } else if (payment_mode === "split payment") {
-          await sendOrderDetails(payment_mode, "paid", cardamount, cashamount);
-        }
+    // if (buttonname === "OK") {
+    //   try {
+    //     if (payment_mode === "eftpos") {
+    //       await sendOrderDetails(payment_mode, "paid", cardamount, 0);
+    //     } else if (payment_mode === "split payment") {
+    //       await sendOrderDetails(payment_mode, "paid", cardamount, cashamount);
+    //     }
 
-        const transaction_receipt =
-          localStorage.getItem("merchant_receipt") || " ";
-        const lastTxPosId = localStorage.getItem("lastTxPosId");
-        // console.log("cardamount", cardamount)
-        const total = Number(cardamount).toFixed(2);
-        console.log("fdhjtfyt6rdrjtfytridytfyyridrft", date_time);
-        const orderTransactionToSend = {
-          amount: parseFloat(total),
-          date: new Date(),
-          pos_id: lastTxPosId,
-          ref_id: reference_id,
-          store_id: posData.store._id,
-          transaction_receipt: transaction_receipt,
-          status: true,
-        };
-        try {
-          const responseaddtransaction = await addtransaction(
-            orderTransactionToSend
-          );
+    //     const transaction_receipt =
+    //       localStorage.getItem("merchant_receipt") || " ";
+    //     const lastTxPosId = localStorage.getItem("lastTxPosId");
+    //     // console.log("cardamount", cardamount)
+    //     const total = Number(cardamount).toFixed(2);
+    //     const orderTransactionToSend = {
+    //       amount: parseFloat(total),
+    //       date: new Date(),
+    //       pos_id: lastTxPosId,
+    //       ref_id: reference_id,
+    //       store_id: posData.store._id,
+    //       transaction_receipt: transaction_receipt,
+    //       status: true,
+    //     };
+    //     try {
+    //       const responseaddtransaction = await addtransaction(
+    //         orderTransactionToSend
+    //       );
 
-          onClose();
-          dispatch(clearOrder());
-          dispatch(setTransactionState(false));
+    //       dispatch(clearOrder());
+    //       dispatch(setTransactionState(false));
 
-          localStorage.removeItem("orderNumber");
-          localStorage.removeItem("uniqueId");
-          localStorage.removeItem("lastTxPosId");
-          localStorage.removeItem("order_id");
-          localStorage.removeItem("transactionMessage");
-          localStorage.removeItem("merchant_receipt");
-          localStorage.removeItem("customer_receipt");
-          localStorage.removeItem("eventMessage");
-          localStorage.removeItem("errorDetail");
-          localStorage.removeItem("hostResponseText");
-          localStorage.removeItem("discountAmount");
-          localStorage.removeItem("customer_receipt");
-        } catch (error) {
-          toast.error(error?.response?.data?.message || error?.message);
-        }
-      } catch (error) {
-        toast.error(error);
-      } finally {
-        setIsSubmitting(false);
-      }
-      // localStorage.setItem("card", "");
-    } else if (buttonname === "CANCEL") {
+    //       localStorage.removeItem("orderNumber");
+    //       localStorage.removeItem("uniqueId");
+    //       localStorage.removeItem("lastTxPosId");
+    //       localStorage.removeItem("order_id");
+    //       localStorage.removeItem("transactionMessage");
+    //       localStorage.removeItem("merchant_receipt");
+    //       localStorage.removeItem("customer_receipt");
+    //       localStorage.removeItem("eventMessage");
+    //       localStorage.removeItem("errorDetail");
+    //       localStorage.removeItem("hostResponseText");
+    //       localStorage.removeItem("discountAmount");
+    //       localStorage.removeItem("customer_receipt");
+    //       onClose();
+    //     } catch (error) {
+    //       toast.error(error?.response?.data?.message || error?.message);
+    //     }
+    //   } catch (error) {
+    //     toast.error(error);
+    //   }
+    //   // localStorage.setItem("card", "");
+    // } else
+    if (buttonname === "CANCEL") {
       setCancel(true);
       // handleClose();
       setTransactionmsg(transactionMessage);
@@ -245,6 +261,63 @@ function Cardpayment({
     animation: "bounce 1s ease infinite",
   };
 
+  const clearLocalStorage = () => {
+    const keys = [
+      "orderNumber",
+      "uniqueId",
+      "lastTxPosId",
+      "order_id",
+      "transactionMessage",
+      "merchant_receipt",
+      "customer_receipt",
+      "eventMessage",
+      "errorDetail",
+      "hostResponseText",
+      "discountAmount",
+    ];
+    keys.forEach((key) => localStorage.removeItem(key));
+  };
+
+  const [submitStatus, setSubmitStatus] = useState("idle"); // "idle", "loading", "success", "error"
+  const handleOkClick = async () => {
+    if (submitStatus === "loading") return;
+    setSubmitStatus("loading");
+
+    try {
+      if (payment_mode === "eftpos") {
+        await sendOrderDetails(payment_mode, "paid", cardamount, 0);
+      } else if (payment_mode === "split payment") {
+        await sendOrderDetails(payment_mode, "paid", cardamount, cashamount);
+      }
+
+      const transaction_receipt =
+        localStorage.getItem("merchant_receipt") || " ";
+      const lastTxPosId = localStorage.getItem("lastTxPosId");
+      const total = Number(cardamount).toFixed(2);
+
+      const orderTransactionToSend = {
+        amount: parseFloat(total),
+        date: new Date(),
+        pos_id: lastTxPosId,
+        ref_id: reference_id,
+        store_id: posData.store._id,
+        transaction_receipt: transaction_receipt,
+        status: true,
+      };
+      await addtransaction(orderTransactionToSend);
+
+      dispatch(clearOrder());
+      dispatch(setTransactionState(false));
+      clearLocalStorage();
+
+      setSubmitStatus("success");
+      onClose();
+    } catch (error) {
+      toast.error(error);
+      setSubmitStatus("error");
+    }
+  };
+
   // console.log(transactionmsg);
 
   return (
@@ -274,11 +347,23 @@ function Cardpayment({
 
                 <div className="grid grid-cols-2 gap-2 mt-6">
                   <Button
-                    item={isSubmitting ? "processing" : "OK"}
+                    item={
+                      submitStatus === "loading" ? (
+                        <FaSpinner className="animate-spin text-2xl text-slate-200" />
+                      ) : submitStatus === "error" ? (
+                        "Retry"
+                      ) : (
+                        "OK"
+                      )
+                    }
                     style={{
                       backgroundColor: "green",
+                      cursor:
+                        submitStatus === "loading" ? "not-allowed" : "pointer",
                     }}
-                    handleClick={handleClick}
+                    handleClick={
+                      submitStatus === "loading" ? undefined : handleOkClick
+                    }
                     background={eftposBgBtn[1]}
                   />
 
@@ -290,6 +375,16 @@ function Cardpayment({
                     handleClick={handleClick}
                     background={eftposBgBtn[2]}
                   />
+
+                  {/* <Button
+                    item="Refresh"
+                    style={{
+                      backgroundColor: "red",
+                      color: "white",
+                    }}
+                    handleClick={handleCloseButton}
+                    background={displayBgBtn[0]}
+                  /> */}
                 </div>
               </div>
 

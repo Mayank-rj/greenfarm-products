@@ -21,8 +21,10 @@ import { sharedState } from "../../SPI/event";
 const Category = () => {
   const dispatch = useDispatch();
   const displayOrder = useSelector((state) => state.displayOrder.orders);
+  const holdOrderNumber = useSelector((state) => state.footer.orderNumber);
+  const unique_id = useSelector((state) => state.footer.uniqueId);
   const { webOrder, orders } = useSelector((state) => state.footer);
-  const weight = useSelector((state) => state.weight)
+  const weight = useSelector((state) => state.weight);
 
   const [categories, setCategories] = useState([]);
   const [openModal, setOpenModal] = useState(false);
@@ -52,11 +54,11 @@ const Category = () => {
       setWidth({ width: "80%" });
       setModalContent(<OpenItem onClose={handleClose} />);
     } else if (buttonName === "SALE BY KG") {
-      // if (weight !== 0) {
+      if (weight !== 0) {
         setOpenModal(!openModal);
         setWidth({ width: "40%" });
         setModalContent(<SaleByKg onClose={handleClose} />);
-      // }
+      }
     } else if (buttonName === "OPEN KG") {
       setOpenModal(!openModal);
       setWidth({ width: "80%" });
@@ -69,8 +71,24 @@ const Category = () => {
     }
   };
 
+  const posData = useSelector((state) => state.posData);
   const handlePayButton = async () => {
+    if (!posData?.store?._id) {
+      toast.error("POS ID NOT FOUND..");
+      return;
+    }
+    const storedOrderNumber =
+      holdOrderNumber?.trim?.() || localStorage.getItem("orderNumber")?.trim();
 
+    const uniqueId =
+      unique_id?.trim?.() || localStorage.getItem("uniqueId")?.trim();
+
+    if (!storedOrderNumber && !uniqueId) {
+      toast.error(
+        "Unable to get order number. Please clear order and make order again."
+      );
+      return;
+    }
     if (!displayOrder || displayOrder.length === 0) {
       toast.error("No products found in the current order.");
       return;
@@ -79,7 +97,7 @@ const Category = () => {
       localStorage.removeItem("transactionMessage");
       localStorage.removeItem("merchant_receipt");
       localStorage.removeItem("customer_receipt");
-      localStorage.removeItem("eventMessage");  
+      localStorage.removeItem("eventMessage");
       localStorage.removeItem("errorDetail");
       localStorage.removeItem("hostResponseText");
       localStorage.removeItem("discountAmount");
@@ -123,7 +141,6 @@ const Category = () => {
 
     // const response = await addOrder(orderPayload);
 
-
     // if (response.success === true) {
     //   toast.success("Order placed successfully!");
     //   localStorage.removeItem("orderNumber");
@@ -131,7 +148,7 @@ const Category = () => {
     // } else {
     //   // toast.error("Failed to place the order. Please try again.");
     // }
-    // } 
+    // }
 
     // catch (error) {
     //   console.error("Error placing order:", error);
@@ -174,33 +191,32 @@ const Category = () => {
               background={categoryBgBtn[index % categoryBgBtn.length]} // This repeats the colors
               disabled={webOrder || orders}
               style={
-                (index % 11 === 0)
+                index % 11 === 0
                   ? { backgroundColor: "hsl(26deg 30% 50%)", color: "white" }
-                  : (index % 11 === 1)
+                  : index % 11 === 1
                   ? { backgroundColor: "hsl(304, 56%, 50%)", color: "white" }
-                  : (index % 11 === 2)
+                  : index % 11 === 2
                   ? { backgroundColor: "hsl(25, 34%, 33%)", color: "white" }
-                  : (index % 11 === 3)
+                  : index % 11 === 3
                   ? { backgroundColor: "hsl(120, 73%, 75%)", color: "black" }
-                  : (index % 11 === 4)
+                  : index % 11 === 4
                   ? { backgroundColor: "hsl(210, 57%, 38%)", color: "white" }
-                  : (index % 11 === 5)
+                  : index % 11 === 5
                   ? { backgroundColor: "hsl(0, 0%, 50%)", color: "white" }
-                  : (index % 11 === 6)
+                  : index % 11 === 6
                   ? { backgroundColor: "hsl(60, 100%, 50%)", color: "black" }
-                  : (index % 11 === 7)
+                  : index % 11 === 7
                   ? { backgroundColor: "hsl(350, 100%, 88%)", color: "black" }
-                  : (index % 11 === 8)
+                  : index % 11 === 8
                   ? { backgroundColor: "hsl(0, 100%, 50%)", color: "white" }
-                  : (index % 11 === 9)
+                  : index % 11 === 9
                   ? { backgroundColor: "hsl(45, 87%, 64%)", color: "black" }
-                  : (index % 11 === 10)
+                  : index % 11 === 10
                   ? { backgroundColor: "hsl(0, 0%, 0%)", color: "white" }
                   : {}
               }
             />
           ))}
-
         </div>
         <Button
           item="OPEN KG"

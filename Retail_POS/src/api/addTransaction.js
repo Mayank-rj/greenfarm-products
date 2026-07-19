@@ -14,7 +14,7 @@ export const addtransaction = async (dataToSend) => {
         },
       }
     );
-
+    return response.data
     // console.log(response);
   } catch (error) {
     // if (error.response) {

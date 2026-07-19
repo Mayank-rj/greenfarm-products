@@ -7,7 +7,8 @@ const ImageUploadvalidator = require("../../middleware/imageUploadValidator");
 const router = express.Router();
 
 // Directory to store uploaded images
-const imageDir = '/var/www/html/images';
+// const imageDir = '/var/www/html/images';
+const imageDir = '../../images';
 
 // Ensure the upload directory exists, create it if not
 if (!fs.existsSync(imageDir)) {

@@ -68,49 +68,55 @@ const PayModal = ({ onClose }) => {
 
   // console.log(terminalStatus);
 
-  const storedOrderNumber = holdOrderNumber
-    ? holdOrderNumber
-    : localStorage.getItem("orderNumber");
-  const uniqueId = unique_id ? unique_id : localStorage.getItem("uniqueId");
-
-  const orderPayload = {
-    store_id: posData?.store?._id,
-    date_time: new Date(),
-    payment_mode: "",
-    order_number: storedOrderNumber,
-    product_details: JSON.stringify(displayOrder),
-    address: "123, Street Name, City, Country",
-    sub_total: inputFocus
-      ? discount
-        ? totalRoundOff.toFixed(2)
-        : Amount
-      : totalRoundOff.toFixed(2),
-    surcharge: inputFocus ? 0 : posData?.surcharge || 0,
-    delivery_charge: 0,
-    coupon_code: "NO_COUPON",
-    discount: discount,
-    order_type: "pos",
-    change_amount: inputFocus ? Number(changeAmount).toFixed(2) : 0,
-    tender_amount: input.pay || 0,
-    split_cash_amount: 0,
-    split_card_amount: 0,
-    reference_id: 0,
-    status: "",
-    grand_total: inputFocus
-      ? discount
-        ? discountAmount
-        : Amount
-      : disAmount.toFixed(2),
-    unique_id: uniqueId,
-    tip_amount: "0",
-  };
-
   const sendOrderDetails = async (
     payment_mode,
     status,
     cardamt = 0,
     cashamt = 0
   ) => {
+    const storedOrderNumber = holdOrderNumber
+      ? holdOrderNumber
+      : localStorage.getItem("orderNumber");
+    const uniqueId = unique_id ? unique_id : localStorage.getItem("uniqueId");
+
+    const orderPayload = {
+      store_id: posData?.store?._id,
+      date_time: new Date(),
+      payment_mode: "",
+      order_number: storedOrderNumber,
+      product_details: JSON.stringify(displayOrder),
+      address: "123, Street Name, City, Country",
+      sub_total: inputFocus
+        ? discount
+          ? totalRoundOff.toFixed(2)
+          : Amount
+        : totalRoundOff.toFixed(2),
+      surcharge: inputFocus ? 0 : posData?.surcharge || 0,
+      delivery_charge: 0,
+      coupon_code: "NO_COUPON",
+      discount: discount,
+      order_type: "pos",
+      change_amount: inputFocus ? Number(changeAmount).toFixed(2) : 0,
+      tender_amount: input.pay || 0,
+      split_cash_amount: 0,
+      split_card_amount: 0,
+      reference_id: 0,
+      status: "",
+      grand_total: inputFocus
+        ? discount
+          ? discountAmount
+          : Amount
+        : disAmount.toFixed(2),
+      unique_id: uniqueId,
+      tip_amount: "0",
+    };
+
+    if (!storedOrderNumber && !uniqueId) {
+      toast.error(
+        "Unable to get order number. Please clear order and make order again."
+      );
+      return;
+    }
     try {
       orderPayload.payment_mode = payment_mode;
       orderPayload.status = status;
